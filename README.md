@@ -74,3 +74,9 @@ Lil Supa
 
 - Setup project and install tailwindCSS
 - Start planning the tasks to do and the design to have a real guide to follow to create the app
+
+### Day 2
+
+- Spent the day designing the app (login/sign up and dashboard) in Figma and completed it! (theoretically)
+- Started to work on the Sign In component
+  ---- For tomorrow: I want to finish (finish finish, I mean, with all functionality and design) the Sing In component and the Sign Up component
