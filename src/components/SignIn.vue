@@ -1,14 +1,9 @@
 <template>
-	<div>Sign In</div>
-	<PersonalRouter :route="route" :buttonText="buttonText" />
-	<p>Time to build up the Final Project!</p>
-	<p class="wu-text">Wu Tang Forever</p>
-	<p v-if="errorMsg" class="">
-		{{ errorMsg }}
-	</p>
+	<img src="../assets/img/todo-logo.svg" />
+
 	<form @submit.prevent="signIn">
 		<div class="">
-			<label class="" for="">Email</label>
+			<label class="" for="email">Email</label>
 			<input
 				class=""
 				type="email"
@@ -19,7 +14,6 @@
 		</div>
 		<div class="mb-4">
 			<label class="" for="">Password</label>
-
 			<div class="">
 				<input
 					class=""
@@ -29,18 +23,22 @@
 					v-model="password"
 					id="password"
 				/>
-				<span class="">
+				<!-- <span class="">
 					<EyeIcon
 						:class="[passwordFieldIcon]"
 						@click.prevent="hidePassword = !hidePassword"
 					/>
-				</span>
+				</span> -->
 			</div>
 		</div>
-
 		<button class="" type="submit">Sign In</button>
+
+		<p v-if="errorMsg" class="">
+			{{ errorMsg }}
+		</p>
+
 		<p class="">
-			<span class="">Don’t have an account? </span>
+			<span class="">Don’t have an account yet? </span>
 
 			<PersonalRouter :route="route" :buttonText="buttonText" />
 		</p>
@@ -57,7 +55,7 @@
 
 	// Route Variables
 	const route = "/auth/sign-up";
-	const buttonText = "Test the Sign Up Route";
+	const buttonText = "Sign up here";
 
 	// Input Fields
 	const email = ref("");
