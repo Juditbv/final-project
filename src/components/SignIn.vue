@@ -1,48 +1,69 @@
 <template>
-	<img src="../assets/img/todo-logo.svg" />
-
-	<form @submit.prevent="signIn">
-		<div class="">
-			<label class="" for="email">Email</label>
-			<input
-				class=""
-				type="email"
-				placeholder="dave@wuTangfinancial.com"
-				v-model="email"
-				id="email"
-			/>
-		</div>
-		<div class="mb-4">
-			<label class="" for="">Password</label>
-			<div class="">
-				<input
-					class=""
-					:type="passwordFieldType"
-					onpaste="return false"
-					placeholder="************"
-					v-model="password"
-					id="password"
+	<div class="h-screen flex flex-col">
+		<main>
+			<div class="container-left">
+				<img
+					src="../assets/img/todo-logo.svg"
+					alt="logo Todo"
+					class="w-32 pb-10"
 				/>
-				<!-- <span class="">
+				<h3 class="font-semibold pb-1">Welcome back!</h3>
+				<p class="font-light pb-10">Sign in to your account</p>
+
+				<form @submit.prevent="signIn">
+					<div class="text-left">
+						<label for="email">Email</label>
+						<div class="w-full">
+							<input
+								class=""
+								type="email"
+								placeholder="youremail@hello.com"
+								v-model="email"
+								id="email"
+							/>
+						</div>
+					</div>
+					<div class="text-left">
+						<label class="" for="password">Password</label>
+						<div class="w-full">
+							<input
+								class=""
+								:type="passwordFieldType"
+								onpaste="return false"
+								placeholder="**********"
+								v-model="password"
+								id="password"
+							/>
+							<!-- <span class="">
 					<EyeIcon
 						:class="[passwordFieldIcon]"
 						@click.prevent="hidePassword = !hidePassword"
 					/>
 				</span> -->
+						</div>
+					</div>
+					<button class="" type="submit">Sign In</button>
+
+					<p v-if="errorMsg" class="">
+						{{ errorMsg }}
+					</p>
+
+					<p class="">
+						<span class="">Don’t have an account yet? </span>
+
+						<PersonalRouter :route="route" :buttonText="buttonText" />
+					</p>
+				</form>
 			</div>
-		</div>
-		<button class="" type="submit">Sign In</button>
-
-		<p v-if="errorMsg" class="">
-			{{ errorMsg }}
-		</p>
-
-		<p class="">
-			<span class="">Don’t have an account yet? </span>
-
-			<PersonalRouter :route="route" :buttonText="buttonText" />
-		</p>
-	</form>
+			<div class="container-right">
+				<img
+					src="../assets/img/login-concept-img.jpg"
+					alt="task list concept image"
+					class="object-contain"
+				/>
+			</div>
+		</main>
+	</div>
 </template>
 
 <script setup>
@@ -91,28 +112,23 @@
 	};
 </script>
 
-<style>
-	.wu-text {
-		color: black;
+<style scoped>
+	main {
+		@apply max-w-5xl flex gap-5 bg-[white] drop-shadow-2xl rounded-3xl m-auto overflow-hidden;
 	}
 
-	.form {
-		display: flex;
-		flex-direction: column;
-		margin: 1rem 0;
+	h3,
+	p {
+		@apply text-xl;
 	}
-	.input {
-		color: black;
-		margin-bottom: 1rem;
+	.container-left {
+		@apply w-1/2 p-8 flex flex-col justify-center text-center items-center;
 	}
-	.button {
-		background-color: #4caf50; /* Green */
-		border: none;
-		color: white;
-		padding: 10px 10px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
+	.container-right {
+		@apply overflow-hidden w-1/2;
+	}
+
+	label {
+		@apply font-semibold mb-4;
 	}
 </style>
