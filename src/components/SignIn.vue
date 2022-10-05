@@ -143,7 +143,7 @@
 	}
 
 	.container-right {
-		@apply overflow-hidden w-1/2 flex flex-col items-center justify-center hidden md:inline-flex;
+		@apply overflow-hidden w-1/2 md:flex flex-col items-center justify-center hidden;
 	}
 
 	label {
