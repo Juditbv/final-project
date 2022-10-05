@@ -18,10 +18,10 @@
 	const errorMsg = ref("");
 
 	//Show hide password variables
-	const passwordFieldType = computed(() =>
-		hidePassword.value ? "password" : "text"
-	);
-	const hidePassword = ref(true);
+	// const passwordFieldType = computed(() =>
+	// 	hidePassword.value ? "password" : "text"
+	// );
+	// const hidePassword = ref(true);
 
 	// Router to push user once SignedIn to the HomeView
 	const redirect = useRouter();
@@ -61,7 +61,6 @@
 						<label for="email">Email</label>
 						<div>
 							<input
-								class=""
 								type="email"
 								placeholder="youremail@hello.com"
 								v-model="email"
@@ -70,11 +69,10 @@
 						</div>
 					</div>
 					<div class="text-left">
-						<label class="" for="password">Password</label>
+						<label for="password">Password</label>
 						<div>
 							<input
-								class=""
-								:type="passwordFieldType"
+								type="password"
 								onpaste="return false"
 								placeholder="**********"
 								v-model="password"
@@ -88,7 +86,7 @@
 				</span> -->
 						</div>
 					</div>
-					<button class="" type="submit">Sign In</button>
+					<button type="submit">Sign in</button>
 
 					<div v-if="errorMsg" class="notification">
 						<p>
@@ -113,7 +111,7 @@
 					</div>
 
 					<p class="text-sm">
-						<span class="">Don’t have an account yet? </span>
+						<span>Don’t have an account yet? </span>
 
 						<PersonalRouter
 							:route="route"
@@ -136,17 +134,12 @@
 
 
 <style scoped>
-	.container-full {
-		background: url(../assets/img/bg-login-desktop-left.svg) left top no-repeat,
-			url(../assets/img/bg-login-desktop-right.svg) right center no-repeat;
-	}
-
 	main {
-		@apply max-w-5xl flex gap-5 bg-[white] drop-shadow-2xl rounded-3xl m-auto overflow-hidden;
+		@apply max-w-5xl flex gap-5 bg-[white] drop-shadow-2xl rounded-3xl overflow-hidden m-auto;
 	}
 
 	.container-left {
-		@apply w-1/2 p-11 flex flex-col justify-center text-center items-center;
+		@apply w-1/2 flex flex-col justify-center text-center items-center p-11;
 	}
 
 	.container-right {
@@ -162,14 +155,14 @@
 	}
 
 	input {
-		@apply pt-3 pb-1 mb-7 max-w-full w-full border-b text-neutral text-opacity-70 focus:outline-none;
+		@apply max-w-full w-full border-b text-neutral text-opacity-70 focus:outline-none pt-3 pb-1 mb-7;
 	}
 
 	button {
-		@apply mb-4 max-w-full w-full bg-red rounded-lg p-3 font-semibold text-[white] hover:bg-green;
+		@apply max-w-full w-full bg-red rounded-lg font-semibold text-[white] hover:bg-green mb-4 p-3;
 	}
 
 	.notification {
-		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg p-2 text-left;
+		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm;
 	}
 </style>
