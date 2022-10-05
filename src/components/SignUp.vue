@@ -1,45 +1,42 @@
 <template>
-	<div>Sign Up</div>
-	<PersonalRouter :route="route" :buttonText="buttonText" />
-	<p>Good Music, Patience and a lot effort</p>
-	<p>Keep calm and code on!</p>
-
-	<form @submit.prevent="signUp">
-		<div class="">
-			<label class="" for="">Email</label>
-			<input
-				class=""
-				type="email"
-				placeholder="dave@wuTangfinancial.com"
-				v-model="email"
-				id="email"
-			/>
-		</div>
-		<div class="">
-			<label class="" for="">Password</label>
-			<input
-				class=""
-				type="password"
-				placeholder="************"
-				v-model="password"
-				id="password"
-			/>
-		</div>
-		<div class="">
-			<label class="" for="">Confirm Password</label>
-			<input
-				class=""
-				type="password"
-				placeholder="************"
-				v-model="confirmPassword"
-				id="confirmPassword"
-			/>
-		</div>
-		<button class="" type="submit">Sign Up</button>
-		<p class="">
-			<span class="">Have an account? </span>
-		</p>
-	</form>
+	<div class="container-full h-screen flex flex-col">
+		<form @submit.prevent="signUp">
+			<div class="">
+				<label class="" for="">Email</label>
+				<input
+					class=""
+					type="email"
+					placeholder="dave@wuTangfinancial.com"
+					v-model="email"
+					id="email"
+				/>
+			</div>
+			<div class="">
+				<label class="" for="">Password</label>
+				<input
+					class=""
+					type="password"
+					placeholder="************"
+					v-model="password"
+					id="password"
+				/>
+			</div>
+			<div class="">
+				<label class="" for="">Confirm Password</label>
+				<input
+					class=""
+					type="password"
+					placeholder="************"
+					v-model="confirmPassword"
+					id="confirmPassword"
+				/>
+			</div>
+			<button class="" type="submit">Sign Up</button>
+			<p class="">
+				<span class="">Have an account? </span>
+			</p>
+		</form>
+	</div>
 </template>
 
 <script setup>
