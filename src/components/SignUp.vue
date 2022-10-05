@@ -42,7 +42,7 @@
 </script>
 
 <template>
-	<div class="container-full h-screen flex flex-col">
+	<div class="container-full h-screen flex flex-col md:px-5 lg:px-0">
 		<main>
 			<div class="container-left">
 				<img
@@ -107,7 +107,7 @@
 						</p>
 					</div>
 
-					<p class="text-sm">
+					<p class="text-sm mb-10 md:mb-0">
 						<span> Already have an account? </span>
 						<PersonalRouter
 							:route="route"
@@ -130,15 +130,15 @@
 
 <style scoped>
 	main {
-		@apply max-w-5xl flex gap-5 bg-[white] drop-shadow-2xl rounded-3xl overflow-hidden m-auto;
+		@apply max-w-full md:max-w-5xl flex gap-5 bg-[white] drop-shadow-2xl rounded-t-3xl rounded md:rounded-3xl overflow-hidden mt-auto md:m-auto;
 	}
 
 	.container-left {
-		@apply w-1/2 flex flex-col justify-center text-center items-center p-11;
+		@apply w-full md:w-1/2 flex flex-col justify-center text-center items-center p-11;
 	}
 
 	.container-right {
-		@apply overflow-hidden w-1/2 flex flex-col items-center justify-center;
+		@apply overflow-hidden w-1/2 flex flex-col items-center justify-center hidden md:inline-flex;
 	}
 
 	label {
