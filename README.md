@@ -86,3 +86,9 @@ Lil Supa
 - Finished the styling of Sign Up and Sign In components, responsive.
 - Started working on the Nav component of the Home/Dashboard.
   ---- For tomorrow: Want to finish the NewTask component and TaskItem (without the edits)
+
+## Day 4
+
+- Done with the styling and logic of NewTask
+- Started with the Home view: fetch the tasks and upload the dashboard everytime a task is added.
+  ---- For tomorrow: Want to finish the Home view, and start with the TaskItem component, showing the correct content.
