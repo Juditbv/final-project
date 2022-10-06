@@ -4,13 +4,21 @@
 </script>
 
 <template>
-	<NavBar />
-	<NewTask />
+	<nav>
+		<NavBar />
+	</nav>
+	<main class="p-8 fill-height">
+		<NewTask />
+	</main>
 </template>
 
 <style>
 	body {
 		@apply bg-neutral bg-opacity-[15%];
+	}
+
+	.fill-height {
+		height: calc(100vh - 80px);
 	}
 </style>
 

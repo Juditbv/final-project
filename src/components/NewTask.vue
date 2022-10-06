@@ -1,35 +1,3 @@
-<template>
-	<div class="new-task-cont">
-		<h3 class="font-semibold text-3xl">Create a new task</h3>
-		<p>
-			You just need to add the title and description below.
-			<br />
-			Easy peasy!
-		</p>
-		<form @submit.prevent="createNewTask">
-			<label for="title">Title</label>
-			<input
-				type="text"
-				placeholder="Procrastinate all day"
-				id="title"
-				v-model="taskTitle"
-			/>
-			<p v-if="errorMsg">{{ emptyTitle }}</p>
-			<label for="description">Description</label>
-			<input
-				type="text"
-				placeholder="just wanna chill in my sofa"
-				id="description"
-				v-model="taskDescription"
-			/>
-			<button type="submit">Add new task to my dashboard</button>
-		</form>
-		<p class="flex gap-1 items-baseline text-sm">
-			Plan your day the easiest way with <span v-html="logoTodo"></span>
-		</p>
-	</div>
-</template>
-
 <script setup>
 	import { ref } from "vue";
 	// constant to save a variable that define the custom event that will be emitted to the homeView
@@ -63,8 +31,80 @@
 	);
 </script>
 
+<template>
+	<div class="new-task-cont">
+		<h3 class="font-semibold text-3xl mb-4">Create a new task</h3>
+		<p class="mb-14">
+			You just need to add the title and description below.
+			<br />
+			Easy peasy!
+		</p>
+		<form @submit.prevent="createNewTask">
+			<label for="title">Title</label>
+			<input
+				type="text"
+				placeholder="Procrastinate all day"
+				id="title"
+				v-model="taskTitle"
+			/>
+			<p v-if="errorMsg" class="notification">
+				<span
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="#EF6F6C"
+						class="w-6 h-6 inline"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+						/>
+					</svg>
+				</span>
+				{{ emptyTitle }}
+			</p>
+			<label for="description">Description</label>
+			<input
+				type="text"
+				placeholder="just wanna chill in my sofa"
+				id="description"
+				v-model="taskDescription"
+			/>
+			<button type="submit">Add task to my dashboard</button>
+		</form>
+		<div class="mt-auto">
+			<p class="flex gap-1 items-baseline text-sm flex-wrap mt-5">
+				Plan your day the easiest way with <span v-html="logoTodo"></span>
+			</p>
+		</div>
+	</div>
+</template>
+
 <style scoped>
 	.new-task-cont {
-		@apply flex flex-col w-1/3 max-w-lg bg-[white] p-8 rounded-3xl drop-shadow-2xl h-full my-6;
+		@apply flex flex-col w-full lg:w-1/3 lg:max-w-lg bg-[white] p-8 rounded-3xl drop-shadow-2xl max-h-fit lg:h-full;
+	}
+
+	label {
+		@apply font-semibold;
+	}
+
+	form {
+		@apply w-full max-w-full;
+	}
+
+	.notification {
+		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm;
+	}
+
+	input {
+		@apply max-w-full w-full border-b text-neutral text-opacity-70 focus:outline-none pt-3 pb-1 mb-7;
+	}
+
+	button {
+		@apply bg-red rounded-lg font-semibold text-[white] hover:bg-green py-2 px-6;
 	}
 </style>
