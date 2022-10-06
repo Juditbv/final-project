@@ -5,15 +5,22 @@
 
 	import { computed, ref } from "vue";
 	import { useTaskStore } from "../stores/task";
+	import { useUserStore } from "../stores/user";
 
-	const allTasks = ref(null);
-	const taskStore = useTaskStore();
+	const allTasksUser = ref([]);
+	// 4. An async function is needed to get all of the tasks stored within the supabase database, this async function's body will contain the tasks value which be use to store the fetchTasks method which lives inside the userTaskStore. This function needs to be called within the setUp script in order to run within the first instance of this component lifecycle.
 
-	const fetchTasks = () => {
-		allTasks.value = taskStore.$state.tasks;
+	const getTasks = () => {
+		useTaskStore().fetchTasks();
+		allTasksUser.value = useTaskStore().tasks;
+		return allTasksUser.value;
 	};
-	fetchTasks();
-	// computed(() => fetchTasks());
+
+	const newTasks = computed(() => getTasks());
+
+	const pushTaskSup = (title, description) => {
+		useTaskStore().addTask(title, description);
+	};
 </script>
 
 <template>
@@ -30,17 +37,11 @@
 			lg:auto-rows-fr lg:grid-cols-3
 		"
 	>
-		<NewTask
-			@new-task="
-				(title, description) => {
-					taskStore.addTask(title, description);
-				}
-			"
-		/>
+		<NewTask @new-task="pushTaskSup" />
 		<section class="lg:col-span-2">
 			<h3>Your tasks</h3>
 			<TaskItem />
-			{{ allTasks }}
+			{{ newTasks }}
 		</section>
 	</main>
 </template>
