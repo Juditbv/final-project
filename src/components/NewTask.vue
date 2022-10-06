@@ -9,7 +9,7 @@
 	// constant to save a variable that holds an initial false boolean value for the errorMessage container that is conditionally displayed depending if the input field is empty
 	const errorMsg = ref(false);
 	// const constant to save a variable that holds the value of the error message
-	const emptyTitle = ref("You need to add a Title for the task, at least ;)");
+	const emptyTitle = ref("You need to add a Title for the task, at least");
 	// arrow function to call the form holding the task title and task description that uses a conditional to first checks if the task title is empty, if true the error message is displayed through the errorMessage container and sets a timeOut method that hides the error after some time. Else, its emmits a custom event to the home view with the task title and task description; clears the task title and task description input fields.
 
 	const createNewTask = () => {
@@ -75,7 +75,7 @@
 			/>
 			<button type="submit">Add task to my dashboard</button>
 		</form>
-		<div class="mt-auto">
+		<div class="lg:mt-auto">
 			<p class="flex gap-1 items-baseline text-sm flex-wrap mt-5">
 				Plan your day the easiest way with <span v-html="logoTodo"></span>
 			</p>
@@ -85,7 +85,7 @@
 
 <style scoped>
 	.new-task-cont {
-		@apply flex flex-col w-full lg:w-1/3 lg:max-w-lg bg-[white] p-8 rounded-3xl drop-shadow-2xl max-h-fit lg:h-full;
+		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:h-full;
 	}
 
 	label {

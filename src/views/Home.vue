@@ -1,14 +1,47 @@
 <script setup>
 	import NavBar from "../components/NavBar.vue";
 	import NewTask from "../components/NewTask.vue";
+	import TaskItem from "../components/TaskItem.vue";
+
+	import { computed, ref } from "vue";
+	import { useTaskStore } from "../stores/task";
+
+	const allTasks = ref(null);
+	const taskStore = useTaskStore();
+
+	const fetchTasks = () => {
+		allTasks.value = taskStore.$state.tasks;
+	};
+	fetchTasks();
+	// computed(() => fetchTasks());
 </script>
 
 <template>
 	<nav>
 		<NavBar />
 	</nav>
-	<main class="p-8 fill-height">
-		<NewTask />
+	<main
+		class="
+			fill-height
+			p-8
+			grid grid-cols-1
+			gap-10
+			auto-rows-max
+			lg:auto-rows-fr lg:grid-cols-3
+		"
+	>
+		<NewTask
+			@new-task="
+				(title, description) => {
+					taskStore.addTask(title, description);
+				}
+			"
+		/>
+		<section class="lg:col-span-2">
+			<h3>Your tasks</h3>
+			<TaskItem />
+			{{ allTasks }}
+		</section>
 	</main>
 </template>
 
