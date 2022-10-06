@@ -80,3 +80,9 @@ Lil Supa
 - Spent the day designing the app (login/sign up and dashboard) in Figma and completed it! (theoretically)
 - Started to work on the Sign In component
   ---- For tomorrow: I want to finish (finish finish, I mean, with all functionality and design) the Sing In component and the Sign Up component
+
+## Day 3
+
+- Finished the styling of Sign Up and Sign In components, responsive.
+- Started working on the Nav component of the Home/Dashboard.
+  ---- For tomorrow: Want to finish the NewTask component and TaskItem (without the edits)
