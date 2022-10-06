@@ -1,12 +1,18 @@
-<template>
-	<NavBar />
-</template>
-
 <script setup>
 	import NavBar from "../components/NavBar.vue";
+	import NewTask from "../components/NewTask.vue";
 </script>
 
-<style></style>
+<template>
+	<NavBar />
+	<NewTask />
+</template>
+
+<style>
+	body {
+		@apply bg-neutral bg-opacity-[15%];
+	}
+</style>
 
 <!-- 
 **Hints**
