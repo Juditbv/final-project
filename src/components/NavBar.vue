@@ -51,6 +51,6 @@
 
 <style scoped>
 	button {
-		@apply bg-red rounded-lg font-semibold text-base text-[white] hover:bg-green py-2 px-7;
+		@apply bg-red rounded-lg font-semibold text-base text-[white] hover:bg-green py-2 px-6;
 	}
 </style>
