@@ -89,6 +89,6 @@ Lil Supa
 
 ## Day 4
 
-- Done with the styling and logic of NewTask
+- Done with the styling and logic of NewTask and the Nav component
 - Started with the Home view: fetch the tasks and upload the dashboard everytime a task is added.
   ---- For tomorrow: Want to finish the Home view, and start with the TaskItem component, showing the correct content.
