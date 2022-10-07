@@ -3,7 +3,7 @@
 	import NewTask from "../components/NewTask.vue";
 	import TaskItem from "../components/TaskItem.vue";
 
-	import { ref, onMounted, watch } from "vue";
+	import { ref, onMounted, computed } from "vue";
 	import { useTaskStore } from "../stores/task";
 	import { useUserStore } from "../stores/user";
 
@@ -13,7 +13,6 @@
 	onMounted(() => {
 		storeTasks.fetchTasks();
 		console.log(storeTasks.fetchTasks());
-		return storeTasks.tasks;
 	});
 
 	async function pushTaskSup(title, description) {
@@ -30,14 +29,22 @@
 		}
 	};
 
-	const completeTask = async (taskId) => {
+	const completeTask = async (taskId, status) => {
 		try {
-			await storeTasks.completeTask(taskId);
+			await storeTasks.toggleCompleteTask(taskId, status);
 			await storeTasks.fetchTasks();
 		} catch (error) {
 			errorMsg.value = "There's been an error completing your task:" + error;
 		}
 	};
+
+	const tasksCompleted = computed(() => {
+		return storeTasks.tasks.filter((task) => task.is_complete);
+	});
+
+	const tasksPending = computed(() => {
+		return storeTasks.tasks.filter((task) => !task.is_complete);
+	});
 
 	const errorMsg = ref("");
 </script>
@@ -60,14 +67,24 @@
 			<h1 class="font-semibold text-6xl">Your tasks</h1>
 			<section class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-10">
 				<TaskItem
-					v-for="task in storeTasks.tasks"
+					v-for="task in tasksPending"
 					:key="task.id"
 					:task="task"
 					@delete-task="deleteTask"
 					@complete-task="completeTask"
 				/>
-				{{ errorMsg }}
 			</section>
+			<h5>Completed, well done!</h5>
+			<section class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-10">
+				<TaskItem
+					v-for="task in tasksCompleted"
+					:key="task.id"
+					:task="task"
+					@delete-task="deleteTask"
+					@complete-task="completeTask"
+				/>
+			</section>
+			{{ errorMsg }}
 		</section>
 	</main>
 </template>

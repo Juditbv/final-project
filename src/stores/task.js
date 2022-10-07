@@ -4,14 +4,12 @@ import { useUserStore } from "./user";
 
 export const useTaskStore = defineStore("tasks", {
   state: () => ({
-    tasks: null,
+    tasks: [],
   }),
   actions: {
     async fetchTasks() {
-      const { data: tasks } = await supabase
-        .from("tasks")
-        .select("*")
-        .order("id", { ascending: false });
+      const { data: tasks } = await supabase.from("tasks").select("*");
+      // .order("is_complete", { ascending: true });
       this.tasks = tasks;
       return this.tasks;
     },
@@ -35,10 +33,10 @@ export const useTaskStore = defineStore("tasks", {
         .match({ id: id });
     },
 
-    async completeTask(id) {
+    async toggleCompleteTask(id, currStatus) {
       const { data, error } = await supabase
         .from("tasks")
-        .update({ is_complete: !this.is_complete })
+        .update({ is_complete: !currStatus })
         .match({ id: id });
     },
   },

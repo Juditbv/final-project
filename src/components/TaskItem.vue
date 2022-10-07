@@ -1,5 +1,5 @@
 <script setup>
-	import { ref } from "vue";
+	import { ref, watch } from "vue";
 
 	const emit = defineEmits(["deleteTask", "completeTask", "updateContTask"]);
 
@@ -12,7 +12,7 @@
 	};
 
 	const completeTask = () => {
-		emit("completeTask", props.task.id);
+		emit("completeTask", props.task.id, props.task.is_complete);
 	};
 
 	const iconComplete = ref(
@@ -22,14 +22,10 @@
 	const iconNotComplete = ref(
 		"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M4.5 12.75l6 6 9-13.5'/></svg>"
 	);
-
-	function colorComplete() {
-		props.task.is_complete ? "bg-blue" : "bg-green";
-	}
 </script>
 
 <template>
-	<div class="card">
+	<div class="card" :class="task.is_complete ? 'complete' : ''">
 		<div>
 			<h3 class="font-semibold text-lg mb-3 mr-4">{{ task.title }}</h3>
 			<p>{{ task.description }}</p>
@@ -86,6 +82,10 @@
 <style scoped>
 	.card {
 		@apply flex justify-between bg-[white] drop-shadow-md rounded-3xl p-5;
+	}
+
+	.complete {
+		@apply bg-neutral bg-opacity-10;
 	}
 </style>
 

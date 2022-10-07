@@ -14,7 +14,7 @@
 		return useUserStore();
 	});
 	// constant that calls user email from the useUserStore
-	const userEmail = ref(userStore.value.$state.user.email);
+	const userEmail = ref(userStore.value.user.email);
 
 	// constant that saves the user email and cleans out the @client from the user
 	const arr = userEmail.value.indexOf("@");
