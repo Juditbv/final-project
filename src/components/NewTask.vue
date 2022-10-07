@@ -85,7 +85,7 @@
 
 <style scoped>
 	.new-task-cont {
-		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:h-full;
+		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:h-[65vh] lg:sticky lg:top-24;
 	}
 
 	label {

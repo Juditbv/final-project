@@ -3,24 +3,22 @@
 	import NewTask from "../components/NewTask.vue";
 	import TaskItem from "../components/TaskItem.vue";
 
-	import { computed, ref } from "vue";
+	import { ref, onMounted, watch } from "vue";
 	import { useTaskStore } from "../stores/task";
 	import { useUserStore } from "../stores/user";
 
-	const allTasksUser = ref([]);
+	const storeTasks = useTaskStore();
 	// 4. An async function is needed to get all of the tasks stored within the supabase database, this async function's body will contain the tasks value which be use to store the fetchTasks method which lives inside the userTaskStore. This function needs to be called within the setUp script in order to run within the first instance of this component lifecycle.
 
-	const getTasks = () => {
-		useTaskStore().fetchTasks();
-		allTasksUser.value = useTaskStore().tasks;
-		return allTasksUser.value;
-	};
+	onMounted(() => {
+		storeTasks.fetchTasks();
+		return storeTasks.tasks;
+	});
 
-	const newTasks = computed(() => getTasks());
-
-	const pushTaskSup = (title, description) => {
-		useTaskStore().addTask(title, description);
-	};
+	async function pushTaskSup(title, description) {
+		await storeTasks.addTask(title, description);
+		await storeTasks.fetchTasks();
+	}
 </script>
 
 <template>
@@ -29,7 +27,6 @@
 	</nav>
 	<main
 		class="
-			fill-height
 			p-8
 			grid grid-cols-1
 			gap-10
@@ -39,9 +36,14 @@
 	>
 		<NewTask @new-task="pushTaskSup" />
 		<section class="lg:col-span-2">
-			<h3>Your tasks</h3>
-			<TaskItem />
-			{{ newTasks }}
+			<h1 class="font-semibold text-6xl">Your tasks</h1>
+			<section class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-10">
+				<TaskItem
+					v-for="task in storeTasks.tasks"
+					:key="task.id"
+					:task="task"
+				/>
+			</section>
 		</section>
 	</main>
 </template>
@@ -49,10 +51,6 @@
 <style>
 	body {
 		@apply bg-neutral bg-opacity-[15%];
-	}
-
-	.fill-height {
-		height: calc(100vh - 80px);
 	}
 </style>
 

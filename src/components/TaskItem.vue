@@ -3,14 +3,26 @@
 	//   ENTER-EMITS-HERE
 	// ])
 
-	// const props = defineProps(["ENTER-PROP-HERE"]);
+	const props = defineProps({
+		task: Object,
+	});
 </script>
 
 <template>
-	<div>Task Item Component</div>
+	<div class="card">
+		<div>
+			<h3>{{ task.title }}</h3>
+			<p>{{ task.description }}</p>
+		</div>
+		<div>buttons</div>
+	</div>
 </template>
 
-<style></style>
+<style scoped>
+	.card {
+		@apply flex justify-between bg-[white] drop-shadow-md rounded-t-3xl rounded-3xl p-5;
+	}
+</style>
 
 <!-- 
 **Hints**
