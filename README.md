@@ -98,4 +98,4 @@ Lil Supa
 - Add all tasks inside dashboard, with correct styling & responsive
 - Show tasks in separate sections depending on completion (completed above). But I'll iterate over the functionalities and maybe filter the tasks if user wwants it.
 - Still have pending the edit functionality of the taskItem component.
-  ---- For next day: Want to finish the edit functionality and want to think about new features for the app. And also adapt everything to responsive design.
+  ---- For next day: Want to finish the edit functionality and want to think about new features for the app. And also adapt everything following the responsive design.
