@@ -12,6 +12,7 @@
 
 	onMounted(() => {
 		storeTasks.fetchTasks();
+		console.log(storeTasks.fetchTasks());
 		return storeTasks.tasks;
 	});
 
@@ -19,6 +20,26 @@
 		await storeTasks.addTask(title, description);
 		await storeTasks.fetchTasks();
 	}
+
+	const deleteTask = async (taskId) => {
+		try {
+			await storeTasks.deleteTask(taskId);
+			await storeTasks.fetchTasks();
+		} catch (error) {
+			errorMsg.value = "There's been an error deleting your task:" + error;
+		}
+	};
+
+	const completeTask = async (taskId) => {
+		try {
+			await storeTasks.completeTask(taskId);
+			await storeTasks.fetchTasks();
+		} catch (error) {
+			errorMsg.value = "There's been an error completing your task:" + error;
+		}
+	};
+
+	const errorMsg = ref("");
 </script>
 
 <template>
@@ -42,7 +63,10 @@
 					v-for="task in storeTasks.tasks"
 					:key="task.id"
 					:task="task"
+					@delete-task="deleteTask"
+					@complete-task="completeTask"
 				/>
+				{{ errorMsg }}
 			</section>
 		</section>
 	</main>

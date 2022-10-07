@@ -1,26 +1,91 @@
 <script setup>
-	// const emit = defineEmits([
-	//   ENTER-EMITS-HERE
-	// ])
+	import { ref } from "vue";
+
+	const emit = defineEmits(["deleteTask", "completeTask", "updateContTask"]);
 
 	const props = defineProps({
 		task: Object,
 	});
+
+	const deleteTask = () => {
+		emit("deleteTask", props.task.id);
+	};
+
+	const completeTask = () => {
+		emit("completeTask", props.task.id);
+	};
+
+	const iconComplete = ref(
+		"<svg xmlns='http://www.w3.org/2000/svg'fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'/></svg>"
+	);
+
+	const iconNotComplete = ref(
+		"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M4.5 12.75l6 6 9-13.5'/></svg>"
+	);
+
+	function colorComplete() {
+		props.task.is_complete ? "bg-blue" : "bg-green";
+	}
 </script>
 
 <template>
 	<div class="card">
 		<div>
-			<h3>{{ task.title }}</h3>
+			<h3 class="font-semibold text-lg mb-3 mr-4">{{ task.title }}</h3>
 			<p>{{ task.description }}</p>
 		</div>
-		<div>buttons</div>
+		<div class="flex flex-col gap-2">
+			<button
+				@click="completeTask"
+				class="rounded-full p-2 hover:bg-neutral"
+				:class="task.is_complete ? 'bg-blue' : 'bg-green'"
+				v-html="task.is_complete ? iconComplete : iconNotComplete"
+			></button>
+			<button
+				@click="updateContTask"
+				class="rounded-full bg-yellow p-2 hover:bg-neutral"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="white"
+					class="w-4 h-4"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+					/>
+				</svg>
+			</button>
+			<button
+				@click="deleteTask"
+				class="rounded-full bg-red p-2 hover:bg-neutral"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="white"
+					class="w-4 h-4"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M6 18L18 6M6 6l12 12"
+					/>
+				</svg>
+			</button>
+		</div>
 	</div>
 </template>
 
 <style scoped>
 	.card {
-		@apply flex justify-between bg-[white] drop-shadow-md rounded-t-3xl rounded-3xl p-5;
+		@apply flex justify-between bg-[white] drop-shadow-md rounded-3xl p-5;
 	}
 </style>
 

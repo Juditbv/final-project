@@ -27,5 +27,19 @@ export const useTaskStore = defineStore("tasks", {
         },
       ]);
     },
+
+    async deleteTask(id) {
+      const { data, error } = await supabase
+        .from("tasks")
+        .delete()
+        .match({ id: id });
+    },
+
+    async completeTask(id) {
+      const { data, error } = await supabase
+        .from("tasks")
+        .update({ is_complete: !this.is_complete })
+        .match({ id: id });
+    },
   },
 });
