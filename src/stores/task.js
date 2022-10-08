@@ -8,8 +8,10 @@ export const useTaskStore = defineStore("tasks", {
   }),
   actions: {
     async fetchTasks() {
-      const { data: tasks } = await supabase.from("tasks").select("*");
-      // .order("is_complete", { ascending: true });
+      const { data: tasks } = await supabase
+        .from("tasks")
+        .select("*")
+        .order("id", { ascending: false });
       this.tasks = tasks;
       return this.tasks;
     },
@@ -37,6 +39,16 @@ export const useTaskStore = defineStore("tasks", {
       const { data, error } = await supabase
         .from("tasks")
         .update({ is_complete: !currStatus })
+        .match({ id: id });
+    },
+
+    async updateTask(id, newTitle, newDesc) {
+      const { data, error } = await supabase
+        .from("tasks")
+        .update({
+          title: newTitle,
+          description: newDesc,
+        })
         .match({ id: id });
     },
   },

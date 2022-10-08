@@ -1,5 +1,5 @@
 <script setup>
-	import { ref, watch } from "vue";
+	import { ref } from "vue";
 
 	const emit = defineEmits(["deleteTask", "completeTask", "updateContTask"]);
 
@@ -15,10 +15,15 @@
 		emit("completeTask", props.task.id, props.task.is_complete);
 	};
 
+	const updateContTask = () => {
+		emit("updateContTask", props.task.id, taskTitle.value, taskDescription.value);
+		editingTask.value = false;
+	};
+
 	const editingTask = ref(false);
 
-	const newTaskTitle = ref(props.task.title);
-	const newTaskDescription = ref(props.task.description);
+	const taskTitle = ref(props.task.title);
+	const taskDescription = ref(props.task.description);
 
 	const iconComplete = ref(
 		"<svg xmlns='http://www.w3.org/2000/svg'fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'/></svg>"
@@ -31,26 +36,42 @@
 
 <template>
 	<div class="card" :class="task.is_complete ? 'complete' : ''">
-		<div>
-			<h3 v-show="!editingTask" class="font-semibold text-lg mb-3 mr-4">
-				{{ task.title }}
+		<div class="mr-4">
+			<h3 v-show="!editingTask" class="font-semibold text-lg mb-3">
+				{{ taskTitle }}
 			</h3>
 			<input
 				type="text"
 				id="newTaskTitle"
 				class="input-edit font-semibold text-lg"
 				v-show="editingTask"
-				v-model="newTaskTitle"
+				v-model="taskTitle"
 			/>
-			<p v-show="!editingTask">{{ task.description }}</p>
+			<p v-show="!editingTask">{{ taskDescription }}</p>
 			<input
 				type="text"
 				id="newTaskDescription"
 				class="input-edit"
 				v-show="editingTask"
-				v-model="newTaskDescription"
+				v-model="taskDescription"
 			/>
-			<button @click="updateContTask" v-show="editingTask">Done</button>
+			<button
+				@click="updateContTask"
+				v-show="editingTask"
+				class="
+					bg-green
+					rounded-lg
+					font-semibold
+					text-base text-[white]
+					hover:bg-neutral
+					py-2
+					px-6
+					w-full
+					max-w-xs
+				"
+			>
+				Done
+			</button>
 		</div>
 		<div class="flex flex-col gap-2">
 			<button
@@ -111,7 +132,7 @@
 	}
 
 	.input-edit {
-		@apply mb-3 mr-4 p-2 pl-4 border border-neutral outline-neutral rounded-xl w-full max-w-xs;
+		@apply px-3 py-1 mb-2 border border-neutral outline-neutral rounded-xl w-full max-w-xs;
 	}
 </style>
 

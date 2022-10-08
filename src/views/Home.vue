@@ -38,6 +38,15 @@
 		}
 	};
 
+	const updateTask = async (taskId, taskTitle, taskDescription) => {
+		try {
+			await storeTasks.updateTask(taskId, taskTitle, taskDescription);
+			await storeTasks.fetchTasks();
+		} catch (error) {
+			errorMsg.value = "There's been an error whilte updating your task:" + error;
+		}
+	};
+
 	const tasksCompleted = computed(() => {
 		return storeTasks.tasks.filter((task) => task.is_complete);
 	});
@@ -65,13 +74,16 @@
 		<NewTask @new-task="pushTaskSup" />
 		<section class="lg:col-span-2">
 			<h1 class="font-semibold text-6xl">Your tasks</h1>
-			<section class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-10">
+			<section
+				class="grid grid-cols-1 gap-10 lg:grid-cols-2 auto-rows-max mt-10"
+			>
 				<TaskItem
 					v-for="task in tasksPending"
 					:key="task.id"
 					:task="task"
 					@delete-task="deleteTask"
 					@complete-task="completeTask"
+					@updateContTask="updateTask"
 				/>
 			</section>
 			<h5 class="font-semibold text-2xl mt-10">All you've done so far!</h5>
