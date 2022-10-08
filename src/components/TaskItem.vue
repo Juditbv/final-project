@@ -15,6 +15,11 @@
 		emit("completeTask", props.task.id, props.task.is_complete);
 	};
 
+	const editingTask = ref(false);
+
+	const newTaskTitle = ref(props.task.title);
+	const newTaskDescription = ref(props.task.description);
+
 	const iconComplete = ref(
 		"<svg xmlns='http://www.w3.org/2000/svg'fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'/></svg>"
 	);
@@ -27,8 +32,25 @@
 <template>
 	<div class="card" :class="task.is_complete ? 'complete' : ''">
 		<div>
-			<h3 class="font-semibold text-lg mb-3 mr-4">{{ task.title }}</h3>
-			<p>{{ task.description }}</p>
+			<h3 v-show="!editingTask" class="font-semibold text-lg mb-3 mr-4">
+				{{ task.title }}
+			</h3>
+			<input
+				type="text"
+				id="newTaskTitle"
+				class="input-edit font-semibold text-lg"
+				v-show="editingTask"
+				v-model="newTaskTitle"
+			/>
+			<p v-show="!editingTask">{{ task.description }}</p>
+			<input
+				type="text"
+				id="newTaskDescription"
+				class="input-edit"
+				v-show="editingTask"
+				v-model="newTaskDescription"
+			/>
+			<button @click="updateContTask" v-show="editingTask">Done</button>
 		</div>
 		<div class="flex flex-col gap-2">
 			<button
@@ -38,7 +60,7 @@
 				v-html="task.is_complete ? iconComplete : iconNotComplete"
 			></button>
 			<button
-				@click="updateContTask"
+				@click="editingTask = !editingTask"
 				class="rounded-full bg-yellow p-2 hover:bg-neutral"
 			>
 				<svg
@@ -85,7 +107,11 @@
 	}
 
 	.complete {
-		@apply bg-neutral bg-opacity-10;
+		@apply bg-neutral bg-opacity-20;
+	}
+
+	.input-edit {
+		@apply mb-3 mr-4 p-2 pl-4 border border-neutral outline-neutral rounded-xl w-full max-w-xs;
 	}
 </style>
 

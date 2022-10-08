@@ -74,7 +74,7 @@
 					@complete-task="completeTask"
 				/>
 			</section>
-			<h5>Completed, well done!</h5>
+			<h5 class="font-semibold text-2xl mt-10">All you've done so far!</h5>
 			<section class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-10">
 				<TaskItem
 					v-for="task in tasksCompleted"
