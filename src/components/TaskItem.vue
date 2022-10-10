@@ -26,11 +26,11 @@
 	const taskDescription = ref(props.task.description);
 
 	const iconComplete = ref(
-		`<svg xmlns='http://www.w3.org/2000/svg'fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'/></svg>`
+		`<svg xmlns='http://www.w3.org/2000/svg'fill='none' viewBox='0 0 24 24' stroke-width='1.5' class='w-4 h-4 stroke-[white]'><path stroke-linecap='round' stroke-linejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'/></svg>`
 	);
 
 	const iconNotComplete = ref(
-		`<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='#54494B' class='w-4 h-4'><path stroke-linecap='round' stroke-linejoin='round' d='M4.5 12.75l6 6 9-13.5'/></svg>`
+		`<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5'  class='w-4 h-4 stroke-[white]'><path stroke-linecap='round' stroke-linejoin='round' d='M4.5 12.75l6 6 9-13.5'/></svg>`
 	);
 </script>
 
@@ -76,17 +76,19 @@
 		<div class="flex flex-col gap-2">
 			<button
 				@click="completeTask"
-				class="rounded-full p-2"
+				class="rounded-full"
 				:class="
 					task.is_complete
-						? 'bg-blue hover:bg-neutral'
-						: 'border border-neutral hover:bg-green'
+						? 'bg-blue hover:bg-neutral p-2'
+						: 'border border-green hover:bg-green p-[7px]'
 				"
 				v-html="task.is_complete ? iconComplete : iconNotComplete"
 			></button>
 			<button
+				v-if="!task.is_complete"
 				@click="editingTask = !editingTask"
-				class="rounded-full bg-yellow p-2 hover:bg-neutral"
+				class="rounded-full p-2 hover:bg-neutral"
+				:class="editingTask ? 'bg-neutral' : 'bg-yellow'"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

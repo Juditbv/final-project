@@ -40,7 +40,9 @@
 </script>
 
 <template>
-	<div class="flex py-5 px-12 justify-between content-center bg-[white]">
+	<div
+		class="flex py-5 px-6 md:px-12 justify-between content-center bg-[white]"
+	>
 		<p class="flex gap-1 items-baseline text-xl">
 			<span class="hidden md:inline-flex">The</span>
 			<span v-html="logoTodo"></span> of {{ nameEmail }}
