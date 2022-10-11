@@ -69,7 +69,7 @@
 			<label for="description">Description</label>
 			<input
 				type="text"
-				placeholder="just wanna chill in my sofa"
+				placeholder="Just wanna chill in my sofa"
 				id="description"
 				v-model="taskDescription"
 			/>
@@ -80,7 +80,7 @@
 
 <style scoped>
 	.new-task-cont {
-		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:sticky lg:top-24;
+		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:sticky lg:top-52;
 	}
 
 	label {

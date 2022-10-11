@@ -3,21 +3,24 @@
 	import NewTask from "../components/NewTask.vue";
 	import TaskItem from "../components/TaskItem.vue";
 	import FooterComp from "../components/FooterComp.vue";
+	import UserPreferences from "../components/UserPreferences.vue";
 
 	import { ref, onMounted, computed } from "vue";
 	import { useTaskStore } from "../stores/task";
-	import { useUserStore } from "../stores/user";
 
 	const storeTasks = useTaskStore();
 
 	onMounted(() => {
 		storeTasks.fetchTasks();
-		console.log(storeTasks.fetchTasks());
 	});
 
 	async function pushTaskSup(title, description) {
-		await storeTasks.addTask(title, description);
-		await storeTasks.fetchTasks();
+		try {
+			await storeTasks.addTask(title, description);
+			await storeTasks.fetchTasks();
+		} catch (error) {
+			errorMsg.value = "There's been an error creating your task:" + error;
+		}
 	}
 
 	const deleteTask = async (taskId) => {
@@ -46,6 +49,10 @@
 			errorMsg.value = "There's been an error whilte updating your task:" + error;
 		}
 	};
+	const viewCols = ref(true);
+	const changeView = (view) => {
+		viewCols.value = view;
+	};
 
 	const tasksCompleted = computed(() => {
 		return storeTasks.tasks.filter((task) => task.is_complete);
@@ -69,13 +76,22 @@
 			gap-10
 			auto-rows-max
 			lg:auto-rows-fr lg:grid-cols-3
+			min-height-empty
 		"
 	>
-		<NewTask @new-task="pushTaskSup" />
+		<div>
+			<UserPreferences
+				@toggle-list="changeView"
+				@toggle-cols="changeView"
+				:view-cols="viewCols"
+			/>
+			<NewTask @new-task="pushTaskSup" />
+		</div>
 		<section class="lg:col-span-2">
 			<h1 class="font-semibold text-6xl">Your tasks</h1>
 			<section
-				class="grid grid-cols-1 gap-10 lg:grid-cols-2 auto-rows-max mt-10"
+				class="grid gap-10 auto-rows-max mt-10"
+				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
 			>
 				<TaskItem
 					v-for="task in tasksPending"
@@ -87,7 +103,10 @@
 				/>
 			</section>
 			<h5 class="font-semibold text-2xl mt-10">All you've done so far!</h5>
-			<section class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-10">
+			<section
+				class="grid gap-10 mt-10"
+				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
+			>
 				<TaskItem
 					v-for="task in tasksCompleted"
 					:key="task.id"
@@ -96,7 +115,27 @@
 					@complete-task="completeTask"
 				/>
 			</section>
-			{{ errorMsg }}
+			<div v-if="errorMsg" class="notification">
+				<p>
+					<span
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="#EF6F6C"
+							class="w-6 h-6 inline"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+							/>
+						</svg>
+					</span>
+					{{ errorMsg }}
+				</p>
+			</div>
 		</section>
 	</main>
 	<FooterComp />
@@ -105,5 +144,13 @@
 <style>
 	body {
 		@apply bg-neutral bg-opacity-[15%];
+	}
+
+	.min-height-empty {
+		min-height: calc(100vh - 80px);
+	}
+
+	.notification {
+		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm absolute bottom-2 left-2;
 	}
 </style>
