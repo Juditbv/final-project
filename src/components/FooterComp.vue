@@ -11,7 +11,7 @@
 <template>
 	<footer
 		class="
-			flex
+			flex flex-wrap
 			py-5
 			px-6
 			md:px-12
@@ -23,7 +23,18 @@
 			bg-[white]
 		"
 	>
-		<p class="flex gap-1 items-baseline text-sm flex-wrap">
+		<p
+			class="
+				flex
+				gap-1
+				text-center
+				items-center
+				justify-center
+				md:items-baseline
+				text-sm
+				flex-wrap
+			"
+		>
 			Plan your day the easiest way with <span v-html="logoTodo"></span>
 		</p>
 		<p>|</p>
