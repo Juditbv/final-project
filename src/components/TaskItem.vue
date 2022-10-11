@@ -92,7 +92,7 @@
 					py-2
 					px-6
 					w-full
-					max-w-xs
+					max-w-xl
 				"
 			>
 				Done
@@ -176,7 +176,7 @@
 	}
 
 	.input-edit {
-		@apply px-3 py-1 mb-2 border border-neutral outline-neutral rounded-xl w-full max-w-xs;
+		@apply px-3 py-1 mb-2 border border-neutral outline-neutral rounded-xl w-full max-w-xl;
 	}
 
 	.notification {
