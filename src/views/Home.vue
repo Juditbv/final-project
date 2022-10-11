@@ -149,7 +149,7 @@
 		</section>
 	</main>
 	<FooterComp />
-	<!-- <ScrollToTop /> -->
+	<ScrollToTop />
 </template>
 
 <style>
