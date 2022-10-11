@@ -34,7 +34,7 @@
 		"
 	>
 		<h5 class="font-semibold text-lg">How to see your tasks</h5>
-		<div>
+		<div class="flex flex-nowrap">
 			<button
 				id="list"
 				@click="toggleList"

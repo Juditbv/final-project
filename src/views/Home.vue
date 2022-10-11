@@ -13,6 +13,7 @@
 
 	onMounted(() => {
 		storeTasks.fetchTasks();
+		window.addEventListener("resize", changeViewCols);
 	});
 
 	async function pushTaskSup(title, description) {
@@ -50,9 +51,17 @@
 			errorMsg.value = "There's been an error whilte updating your task:" + error;
 		}
 	};
+
 	const viewCols = ref(true);
+
 	const changeView = (view) => {
 		viewCols.value = view;
+	};
+
+	const changeViewCols = () => {
+		if (window.innerWidth < 768) {
+			viewCols.value = false;
+		}
 	};
 
 	const tasksCompleted = computed(() => {
@@ -91,7 +100,7 @@
 		<section class="lg:col-span-2">
 			<h1 class="font-semibold text-6xl">Your tasks</h1>
 			<section
-				class="grid gap-10 auto-rows-max mt-10"
+				class="grid gap-10 mt-10"
 				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
 			>
 				<TaskItem
@@ -140,7 +149,7 @@
 		</section>
 	</main>
 	<FooterComp />
-	<ScrollToTop />
+	<!-- <ScrollToTop /> -->
 </template>
 
 <style>
@@ -154,5 +163,11 @@
 
 	.notification {
 		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm absolute bottom-2 left-2;
+	}
+
+	@media (max-width: 767px) {
+		.cols-1-mobile {
+			grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+		}
 	}
 </style>
