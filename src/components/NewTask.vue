@@ -75,17 +75,12 @@
 			/>
 			<button type="submit">Add task to my dashboard</button>
 		</form>
-		<div class="lg:mt-auto">
-			<p class="flex gap-1 items-baseline text-sm flex-wrap mt-5">
-				Plan your day the easiest way with <span v-html="logoTodo"></span>
-			</p>
-		</div>
 	</div>
 </template>
 
 <style scoped>
 	.new-task-cont {
-		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:h-[80vh] lg:sticky lg:top-24;
+		@apply flex flex-col w-full bg-[white] p-8 rounded-3xl drop-shadow-2xl h-fit lg:sticky lg:top-24;
 	}
 
 	label {

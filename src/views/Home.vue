@@ -2,6 +2,7 @@
 	import NavBar from "../components/NavBar.vue";
 	import NewTask from "../components/NewTask.vue";
 	import TaskItem from "../components/TaskItem.vue";
+	import FooterComp from "../components/FooterComp.vue";
 
 	import { ref, onMounted, computed } from "vue";
 	import { useTaskStore } from "../stores/task";
@@ -98,6 +99,7 @@
 			{{ errorMsg }}
 		</section>
 	</main>
+	<FooterComp />
 </template>
 
 <style>
