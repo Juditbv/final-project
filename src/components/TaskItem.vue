@@ -14,10 +14,22 @@
 	const completeTask = () => {
 		emit("completeTask", props.task.id, props.task.is_complete);
 	};
-
+	const errorMsgTitle = ref("");
 	const updateContTask = () => {
-		emit("updateContTask", props.task.id, taskTitle.value, taskDescription.value);
-		editingTask.value = false;
+		if (taskTitle.value === "") {
+			errorMsgTitle.value = "The title can't be empty!";
+			setTimeout(() => {
+				errorMsgTitle.value = null;
+			}, 3000);
+		} else {
+			emit(
+				"updateContTask",
+				props.task.id,
+				taskTitle.value,
+				taskDescription.value
+			);
+			editingTask.value = false;
+		}
 	};
 
 	const editingTask = ref(false);
@@ -39,6 +51,27 @@
 				v-show="editingTask"
 				v-model="taskTitle"
 			/>
+			<div v-if="errorMsgTitle" class="notification">
+				<p>
+					<span
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="#EF6F6C"
+							class="w-6 h-6 inline"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+							/>
+						</svg>
+					</span>
+					{{ errorMsgTitle }}
+				</p>
+			</div>
 			<p v-show="!editingTask">{{ taskDescription }}</p>
 			<input
 				type="text"
@@ -144,5 +177,9 @@
 
 	.input-edit {
 		@apply px-3 py-1 mb-2 border border-neutral outline-neutral rounded-xl w-full max-w-xs;
+	}
+
+	.notification {
+		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm;
 	}
 </style>
