@@ -4,6 +4,7 @@
 	import TaskItem from "../components/TaskItem.vue";
 	import FooterComp from "../components/FooterComp.vue";
 	import UserPreferences from "../components/UserPreferences.vue";
+	import ScrollToTop from "../components/ScrollToTop.vue";
 
 	import { ref, onMounted, computed } from "vue";
 	import { useTaskStore } from "../stores/task";
@@ -139,6 +140,7 @@
 		</section>
 	</main>
 	<FooterComp />
+	<ScrollToTop />
 </template>
 
 <style>
