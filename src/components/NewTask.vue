@@ -100,6 +100,6 @@
 	}
 
 	button {
-		@apply bg-red rounded-lg font-semibold text-[white] hover:bg-green py-2 px-6;
+		@apply bg-red w-full rounded-lg font-semibold text-[white] hover:bg-green py-2 px-6;
 	}
 </style>
