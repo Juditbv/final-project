@@ -20,7 +20,7 @@
 				errorMsg.value = null;
 			}, 5000);
 		} else {
-			emit("newTask", taskTitle.value, taskDescription.value);
+			emit("newTask", taskTitle.value, taskDescription.value, taskPriority.value);
 			console.log(taskTitle.value, taskDescription.value);
 			taskDescription.value = "";
 			taskTitle.value = "";

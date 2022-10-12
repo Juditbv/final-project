@@ -16,9 +16,9 @@
 		window.addEventListener("resize", changeViewCols);
 	});
 
-	async function pushTaskSup(title, description) {
+	async function pushTaskSup(title, description, priority) {
 		try {
-			await storeTasks.addTask(title, description);
+			await storeTasks.addTask(title, description, priority);
 			await storeTasks.fetchTasks();
 		} catch (error) {
 			errorMsg.value = "There's been an error creating your task:" + error;
@@ -43,18 +43,21 @@
 		}
 	};
 
-	const updateTask = async (taskId, taskTitle, taskDescription) => {
+	const updateTask = async (taskId, taskTitle, taskDescription, taskPriority) => {
 		try {
-			await storeTasks.updateTask(taskId, taskTitle, taskDescription);
+			await storeTasks.updateTask(
+				taskId,
+				taskTitle,
+				taskDescription,
+				taskPriority
+			);
 			await storeTasks.fetchTasks();
 		} catch (error) {
-			errorMsg.value = "There's been an error whilte updating your task:" + error;
+			errorMsg.value = "There's been an error while updating your task:" + error;
 		}
 	};
 
 	const viewCols = ref(true);
-
-	console.log(viewCols.value);
 
 	const changeView = (view) => {
 		viewCols.value = view;

@@ -26,7 +26,8 @@
 				"updateContTask",
 				props.task.id,
 				taskTitle.value,
-				taskDescription.value
+				taskDescription.value,
+				taskPriority.value
 			);
 			editingTask.value = false;
 		}
@@ -36,12 +37,13 @@
 
 	const taskTitle = ref(props.task.title);
 	const taskDescription = ref(props.task.description);
+	const taskPriority = ref(props.task.priority);
 </script>
 
 <template>
 	<div class="card" :class="task.is_complete ? 'complete' : ''">
 		<div class="mr-4">
-			<h3 v-show="!editingTask" class="font-semibold text-lg mb-3">
+			<h3 v-show="!editingTask" class="font-semibold text-lg mb-2">
 				{{ taskTitle }}
 			</h3>
 			<input
@@ -80,6 +82,31 @@
 				v-show="editingTask"
 				v-model="taskDescription"
 			/>
+			<p
+				class="py-1 px-2 text-xs text-[white] max-w-max mt-2 rounded-xl"
+				:class="
+					taskPriority === 3
+						? 'bg-red'
+						: taskPriority === 2
+						? 'bg-blue'
+						: 'bg-green'
+				"
+				v-text="
+					taskPriority === 3 ? 'High' : taskPriority === 2 ? 'Medium' : 'Low'
+				"
+				v-show="!editingTask && taskPriority"
+			></p>
+			<select
+				name="priority"
+				id="priority"
+				class="input-edit"
+				v-model="taskPriority"
+				v-show="editingTask"
+			>
+				<option value="1">Low</option>
+				<option value="2">Medium</option>
+				<option value="3">High</option>
+			</select>
 			<button
 				@click="updateContTask"
 				v-show="editingTask"
