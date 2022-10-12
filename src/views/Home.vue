@@ -12,14 +12,14 @@
 	const storeTasks = useTaskStore();
 
 	onMounted(() => {
-		storeTasks.fetchTasks();
+		initialFetch();
 		window.addEventListener("resize", changeViewCols);
 	});
 
 	async function pushTaskSup(title, description, priority) {
 		try {
 			await storeTasks.addTask(title, description, priority);
-			await storeTasks.fetchTasks();
+			initialFetch();
 		} catch (error) {
 			errorMsg.value = "There's been an error creating your task:" + error;
 		}
@@ -28,7 +28,7 @@
 	const deleteTask = async (taskId) => {
 		try {
 			await storeTasks.deleteTask(taskId);
-			await storeTasks.fetchTasks();
+			initialFetch();
 		} catch (error) {
 			errorMsg.value = "There's been an error deleting your task:" + error;
 		}
@@ -37,7 +37,7 @@
 	const completeTask = async (taskId, status) => {
 		try {
 			await storeTasks.toggleCompleteTask(taskId, status);
-			await storeTasks.fetchTasks();
+			initialFetch();
 		} catch (error) {
 			errorMsg.value = "There's been an error completing your task:" + error;
 		}
@@ -46,7 +46,7 @@
 	const updateTask = async (taskId, payload) => {
 		try {
 			await storeTasks.updateTask(taskId, payload);
-			await storeTasks.fetchTasks();
+			initialFetch();
 		} catch (error) {
 			errorMsg.value = "There's been an error while updating your task:" + error;
 		}
@@ -73,6 +73,24 @@
 	});
 
 	const errorMsg = ref("");
+
+	const order = ref("");
+	const sortPriority = async () => {
+		storeTasks.fetchTasksPriority();
+		order.value = "priority";
+	};
+	const sortDate = async () => {
+		storeTasks.fetchTasks();
+		order.value = "date";
+	};
+
+	const initialFetch = () => {
+		if (order.value === "priority") {
+			sortPriority();
+		} else {
+			sortDate();
+		}
+	};
 </script>
 
 <template>
@@ -94,7 +112,10 @@
 				<UserPreferences
 					@toggle-list="changeView"
 					@toggle-cols="changeView"
+					@order-priority="sortPriority"
+					@order-date="sortDate"
 					:view-cols="viewCols"
+					:order="order"
 				/>
 				<NewTask @new-task="pushTaskSup" />
 			</div>

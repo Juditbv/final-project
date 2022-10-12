@@ -15,6 +15,15 @@ export const useTaskStore = defineStore("tasks", {
       this.tasks = tasks;
       return this.tasks;
     },
+    async fetchTasksPriority() {
+      const { data: tasks } = await supabase
+        .from("tasks")
+        .select("*")
+        .order("priority", { ascending: false })
+        .order("id", { ascending: false });
+      this.tasks = tasks;
+      return this.tasks;
+    },
     // New code
     async addTask(title, description, priority) {
       console.log(useUserStore().user.id);
