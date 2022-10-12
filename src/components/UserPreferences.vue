@@ -23,7 +23,6 @@
 			p-4
 			rounded-3xl
 			h-fit
-			lg:sticky lg:top-[6%]
 			mb-6
 			text-[white]
 			hidden

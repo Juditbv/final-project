@@ -92,12 +92,14 @@
 		"
 	>
 		<div>
-			<UserPreferences
-				@toggle-list="changeView"
-				@toggle-cols="changeView"
-				:view-cols="viewCols"
-			/>
-			<NewTask @new-task="pushTaskSup" />
+			<div class="lg:sticky top-24">
+				<UserPreferences
+					@toggle-list="changeView"
+					@toggle-cols="changeView"
+					:view-cols="viewCols"
+				/>
+				<NewTask @new-task="pushTaskSup" />
+			</div>
 		</div>
 		<section class="lg:col-span-2">
 			<h1 class="font-semibold text-6xl">Your tasks</h1>
