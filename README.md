@@ -99,3 +99,17 @@ Lil Supa
 - Show tasks in separate sections depending on completion (completed above). But I'll iterate over the functionalities and maybe filter the tasks if user wwants it.
 - Still have pending the edit functionality of the taskItem component.
   ---- For next day: Want to finish the edit functionality and want to think about new features for the app. And also adapt everything following the responsive design.
+
+## Day 6
+
+- Finished the edit task functionality
+- Thought about new functionalities to add: add priority to tasks, filter by entered date, show the tasks in different formats...
+  ---- For next day: Want to apply this functionalities
+
+## Day 7
+
+- Add toggle to view tasks with list or columns
+- Edit the errors to show notifications
+- Add validation on edit task to avoid an empty title
+- Add toTop button when scrolling
+  ---- For next day: Want to add/create logic to tasks to have priority and a filter of priority and the filter of entered_at (when the task was created)
