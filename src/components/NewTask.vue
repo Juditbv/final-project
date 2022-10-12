@@ -1,16 +1,17 @@
 <script setup>
 	import { ref } from "vue";
-	// constant to save a variable that define the custom event that will be emitted to the homeView
+
 	const emit = defineEmits(["newTask"]);
-	// constant to save a variable that holds the value of the title input field of the new task
+
 	const taskTitle = ref("");
-	// constant to save a variable that holds the value of the description input field of the new task
+
 	const taskDescription = ref("");
-	// constant to save a variable that holds an initial false boolean value for the errorMessage container that is conditionally displayed depending if the input field is empty
+
+	const taskPriority = ref(1);
+
 	const errorMsg = ref(false);
-	// const constant to save a variable that holds the value of the error message
+
 	const emptyTitle = ref("You need to add a Title for the task, at least");
-	// arrow function to call the form holding the task title and task description that uses a conditional to first checks if the task title is empty, if true the error message is displayed through the errorMessage container and sets a timeOut method that hides the error after some time. Else, its emmits a custom event to the home view with the task title and task description; clears the task title and task description input fields.
 
 	const createNewTask = () => {
 		if (!taskTitle.value) {
@@ -73,6 +74,12 @@
 				id="description"
 				v-model="taskDescription"
 			/>
+			<label for="priority">Priority</label>
+			<select name="priority" id="priority" v-model="taskPriority">
+				<option value="1">Low</option>
+				<option value="2">Medium</option>
+				<option value="3">High</option>
+			</select>
 			<button type="submit">Add task to my dashboard</button>
 		</form>
 	</div>
@@ -96,6 +103,10 @@
 	}
 
 	input {
+		@apply max-w-full w-full border-b text-neutral text-opacity-70 focus:outline-none pt-3 pb-1 mb-7;
+	}
+
+	select {
 		@apply max-w-full w-full border-b text-neutral text-opacity-70 focus:outline-none pt-3 pb-1 mb-7;
 	}
 
