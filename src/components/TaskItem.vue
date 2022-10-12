@@ -92,7 +92,7 @@
 				v-show="editingTask"
 				v-model="taskDescription"
 			/>
-			<div class="grow flex items-end mt-3">
+			<div class="grow flex items-end mt-3" v-show="!editingTask">
 				<div class="text-xs flex items-center">
 					<p
 						class="py-1 px-2 text-[white] max-w-max rounded-xl justify-end mr-2"
@@ -110,7 +110,7 @@
 								? 'Medium'
 								: 'Low'
 						"
-						v-show="!editingTask && taskPriority"
+						v-if="taskPriority"
 					></p>
 					<p>Added on {{ onlyDate }}</p>
 				</div>
