@@ -38,11 +38,21 @@
 	const taskTitle = ref(props.task.title);
 	const taskDescription = ref(props.task.description);
 	const taskPriority = ref(props.task.priority);
+
+	const onlyDate = ref("");
+
+	const getDate = () => {
+		const timestamp = props.task.inserted_at;
+		const date = timestamp.substr(0, 10);
+		const dateReverse = date.split("-").reverse().join("-");
+		onlyDate.value = dateReverse;
+	};
+	getDate();
 </script>
 
 <template>
 	<div class="card" :class="task.is_complete ? 'complete' : ''">
-		<div class="mr-4">
+		<div class="mr-4 flex flex-col justify-start">
 			<h3 v-show="!editingTask" class="font-semibold text-lg mb-2">
 				{{ taskTitle }}
 			</h3>
@@ -82,20 +92,29 @@
 				v-show="editingTask"
 				v-model="taskDescription"
 			/>
-			<p
-				class="py-1 px-2 text-xs text-[white] max-w-max mt-2 rounded-xl"
-				:class="
-					taskPriority === 3
-						? 'bg-red'
-						: taskPriority === 2
-						? 'bg-blue'
-						: 'bg-green'
-				"
-				v-text="
-					taskPriority === 3 ? 'High' : taskPriority === 2 ? 'Medium' : 'Low'
-				"
-				v-show="!editingTask && taskPriority"
-			></p>
+			<div class="grow flex items-end mt-3">
+				<div class="text-xs flex items-center">
+					<p
+						class="py-1 px-2 text-[white] max-w-max rounded-xl justify-end mr-2"
+						:class="
+							taskPriority === 3
+								? 'bg-red'
+								: taskPriority === 2
+								? 'bg-blue'
+								: 'bg-green'
+						"
+						v-text="
+							taskPriority === 3
+								? 'High'
+								: taskPriority === 2
+								? 'Medium'
+								: 'Low'
+						"
+						v-show="!editingTask && taskPriority"
+					></p>
+					<p>Added on {{ onlyDate }}</p>
+				</div>
+			</div>
 			<select
 				name="priority"
 				id="priority"
