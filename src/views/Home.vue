@@ -43,14 +43,9 @@
 		}
 	};
 
-	const updateTask = async (taskId, taskTitle, taskDescription, taskPriority) => {
+	const updateTask = async (taskId, payload) => {
 		try {
-			await storeTasks.updateTask(
-				taskId,
-				taskTitle,
-				taskDescription,
-				taskPriority
-			);
+			await storeTasks.updateTask(taskId, payload);
 			await storeTasks.fetchTasks();
 		} catch (error) {
 			errorMsg.value = "There's been an error while updating your task:" + error;

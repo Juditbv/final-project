@@ -16,24 +16,23 @@
 	};
 	const errorMsgTitle = ref("");
 	const updateContTask = () => {
-		if (taskTitle.value === "") {
+		if (formData.value.title === "") {
 			errorMsgTitle.value = "The title can't be empty!";
 			setTimeout(() => {
 				errorMsgTitle.value = null;
 			}, 3000);
 		} else {
-			emit(
-				"updateContTask",
-				props.task.id,
-				taskTitle.value,
-				taskDescription.value,
-				taskPriority.value
-			);
+			emit("updateContTask", props.task.id, formData.value);
 			editingTask.value = false;
 		}
 	};
 
 	const editingTask = ref(false);
+	const formData = ref({
+		title: props.task.title,
+		description: props.task.description,
+		priority: props.task.priority,
+	});
 
 	const taskTitle = ref(props.task.title);
 	const taskDescription = ref(props.task.description);
@@ -89,14 +88,14 @@
 	<div class="card" :class="task.is_complete ? 'complete' : ''">
 		<div class="mr-4 flex flex-col justify-start">
 			<h3 v-show="!editingTask" class="font-semibold text-lg mb-2">
-				{{ taskTitle }}
+				{{ formData.title }}
 			</h3>
 			<input
 				type="text"
 				id="taskTitle"
 				class="input-edit font-semibold text-lg"
 				v-show="editingTask"
-				v-model="taskTitle"
+				v-model="formData.title"
 			/>
 			<div v-if="errorMsgTitle" class="notification">
 				<p>
@@ -119,18 +118,18 @@
 					{{ errorMsgTitle }}
 				</p>
 			</div>
-			<p v-show="!editingTask">{{ taskDescription }}</p>
+			<p v-show="!editingTask">{{ formData.description }}</p>
 			<input
 				type="text"
 				id="newTaskDescription"
 				class="input-edit"
 				v-show="editingTask"
-				v-model="taskDescription"
+				v-model="formData.description"
 			/>
 			<div class="grow flex items-end mt-3" v-show="!editingTask">
 				<div class="text-xs flex items-center">
 					<p
-						v-if="taskPriority"
+						v-if="formData.priority"
 						class="py-1 px-2 text-[white] max-w-max rounded-xl justify-end mr-2"
 						:class="bgBadge"
 						v-text="textBadge"
@@ -142,7 +141,7 @@
 				name="priority"
 				id="priority"
 				class="input-edit"
-				v-model="taskPriority"
+				v-model="formData.priority"
 				v-show="editingTask"
 			>
 				<option value="1">Low</option>
