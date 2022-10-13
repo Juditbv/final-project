@@ -6,7 +6,7 @@
 	import UserPreferences from "../components/UserPreferences.vue";
 	import ScrollToTop from "../components/ScrollToTop.vue";
 
-	import { ref, onMounted, computed } from "vue";
+	import { ref, onMounted, computed, onBeforeMount } from "vue";
 	import { useTaskStore } from "../stores/task";
 	import { supabase } from "../supabase";
 
@@ -14,6 +14,7 @@
 
 	onMounted(() => {
 		initialFetch();
+		storeTasks.fetchOnlyDates();
 		window.addEventListener("resize", changeViewCols);
 	});
 
@@ -97,18 +98,12 @@
 	const filterPriority = async () => {
 		await storeTasks.filterPriority(filterNumber.value);
 	};
-	// // const filterPriority = () => {
-	// // 	if (filterByPriority === "3") {
-	// // 		return storeTasks.tasks.filter((task) => task.priority === 3);
-	// // 	} else if (filterByPriority === "2") {
-	// // 		return storeTasks.tasks.filter((task) => task.priority === 2);
-	// // 	} else if (filterByPriority === "1") {
-	// // 		return storeTasks.tasks.filter((task) => task.priority === 1);
-	// // 	} else {
-	// // 		return initialFetch();
-	// // 	}
-	// // };
-	// //filters
+
+	const filterDateValue = ref("");
+
+	const filterDate = async () => {
+		await storeTasks.filterDate(filterDateValue.value);
+	};
 </script>
 
 <template>
@@ -149,7 +144,7 @@
 					@change="filterPriority"
 					v-model="filterNumber"
 				>
-					<option value="0">All</option>
+					<option value="0" selected>All</option>
 					<option value="1">Low</option>
 					<option value="2">Medium</option>
 					<option value="3">High</option>
@@ -159,14 +154,15 @@
 					name="date"
 					id="date"
 					class="ml-5"
-					@change="filterByDate"
-					v-model="filterDate"
+					@change="filterDate"
+					v-model="filterDateValue"
 				>
-					<option value="0" selected>All</option>
-					<option value="1">Low</option>
-					<option value="2">Medium</option>
-					<option value="3">High</option>
+					<option value="all" selected>All</option>
+					<option v-for="date in storeTasks.dates" :key="date" :value="date">
+						{{ date }}
+					</option>
 				</select>
+				{{ filterDateValue }}
 			</div>
 			<section
 				class="grid gap-10 mt-10"
@@ -194,7 +190,7 @@
 					@complete-task="completeTask"
 				/>
 			</section>
-			<div v-if="errorMsg" class="notification">
+			<div v-if="errorMsg" class="notificationHome">
 				<p>
 					<span
 						><svg
@@ -230,7 +226,7 @@
 		min-height: calc(100vh - 80px);
 	}
 
-	.notification {
+	.notificationHome {
 		@apply bg-red bg-opacity-70 border border-red mb-4 rounded-lg text-left p-2 text-sm absolute bottom-2 left-2 max-w-xl;
 	}
 

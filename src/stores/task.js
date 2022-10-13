@@ -5,6 +5,7 @@ import { useUserStore } from "./user";
 export const useTaskStore = defineStore("tasks", {
   state: () => ({
     tasks: [],
+    dates: [],
   }),
   actions: {
     async fetchTasks() {
@@ -43,6 +44,35 @@ export const useTaskStore = defineStore("tasks", {
       const { data: tasks } = await query;
       this.tasks = tasks;
       return this.tasks;
+    },
+
+    async filterDate(date) {
+      let query = supabase.from("tasks").select("*");
+      if (date === "all") {
+        query = query.order("id", { ascending: false });
+      } else {
+        query = query.eq("date_plain", date);
+      }
+
+      const { data: tasks } = await query;
+      this.tasks = tasks;
+      return this.tasks;
+    },
+
+    async fetchOnlyDates() {
+      const { data: dates } = await supabase
+        .from("tasks")
+        .select("date_plain")
+        .order("id", { ascending: false });
+
+      const formatedDates = [];
+      dates.forEach(date => {
+        formatedDates.push(date.date_plain);
+      });
+      const noRepeatedDates = new Set(formatedDates);
+      this.dates = noRepeatedDates;
+      this.noRepeatedDates = dates;
+      return this.dates;
     },
     // New code
     async addTask(title, description, priority) {
