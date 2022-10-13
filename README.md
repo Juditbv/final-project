@@ -113,3 +113,11 @@ Lil Supa
 - Add validation on edit task to avoid an empty title
 - Add toTop button when scrolling
   ---- For next day: Want to add/create logic to tasks to have priority and a filter of priority and the filter of entered_at (when the task was created)
+
+## Day 8
+
+- Add toggle to order tasks by priority or date.
+- Add priority to tasks (badge styled with text and color depending on priority)
+- Refactor user preferences styling
+- Refactor function to updateTask
+  ---- For next day: Want fo finally add two filters: to see just tasks with one priority, or from one date, and a check to show completed tasks or not.
