@@ -98,11 +98,11 @@
 	const filterDateValue = ref("");
 
 	const filterPriority = async () => {
-		await storeTasks.filterPriority(filterNumber.value, filterDateValue.value);
+		await storeTasks.filterPriority(filterNumber.value);
 		filterDateValue.value = "all";
 	};
 	const filterDate = async () => {
-		await storeTasks.filterDate(filterDateValue.value, filterNumber.value);
+		await storeTasks.filterDate(filterDateValue.value);
 		filterNumber.value = "0";
 	};
 </script>
@@ -137,36 +137,44 @@
 		<section class="lg:col-span-2">
 			<div class="flex items-baseline flex-wrap justify-between">
 				<h1 class="font-semibold text-6xl">Your tasks</h1>
-				<div>
-					<span class="ml-4 font-semibold">Filter by</span>
-					<label class="text-sm ml-5">Priority</label>
-					<select
-						name="priority"
-						id="priority"
-						class="ml-2 mr-5 text-sm"
-						placeholder="Priority"
-						@change="filterPriority"
-						v-model="filterNumber"
-					>
-						<option value="0" selected>All</option>
-						<option value="1">Low</option>
-						<option value="2">Medium</option>
-						<option value="3">High</option>
-					</select>
-					<span class="mx-2">or</span>
-					<label class="text-sm ml-5">Date</label>
-					<select
-						name="date"
-						id="date"
-						class="ml-2 text-sm"
-						@change="filterDate"
-						v-model="filterDateValue"
-					>
-						<option value="all" selected>All</option>
-						<option v-for="date in storeTasks.dates" :key="date" :value="date">
-							{{ date }}
-						</option>
-					</select>
+				<div class="flex flex-wrap mt-3">
+					<span class="ml-0 sm:ml-4 font-semibold">Filter by</span>
+					<div class="w-full sm:max-w-max mt-2 sm:mt-0">
+						<label class="text-sm ml-0 sm:ml-5">Priority</label>
+						<select
+							name="priority"
+							id="priority"
+							class="ml-2 mr-5 text-sm min-w-[80%] sm:min-w-max"
+							placeholder="Priority"
+							@change="filterPriority"
+							v-model="filterNumber"
+						>
+							<option value="0" selected>All</option>
+							<option value="1">Low</option>
+							<option value="2">Medium</option>
+							<option value="3">High</option>
+						</select>
+					</div>
+					<span class="mx-2 mt-2 sm:mt-0">or</span>
+					<div class="w-full sm:max-w-max mt-2 sm:mt-0">
+						<label class="text-sm ml-0 sm:ml-5">Date</label>
+						<select
+							name="date"
+							id="date"
+							class="ml-2 text-sm min-w-[84%] sm:min-w-max"
+							@change="filterDate"
+							v-model="filterDateValue"
+						>
+							<option value="all" selected>All</option>
+							<option
+								v-for="date in storeTasks.dates"
+								:key="date"
+								:value="date"
+							>
+								{{ date }}
+							</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			<section

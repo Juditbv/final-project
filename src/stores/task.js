@@ -27,13 +27,13 @@ export const useTaskStore = defineStore("tasks", {
       return this.tasks;
     },
     //filters
-    async filterPriority(number, date) {
+    async filterPriority(number) {
       let query = supabase.from("tasks").select("*");
       if (number === "3") {
-        query = query.eq("priority", 3).eq("date_plain", date);
+        query = query.eq("priority", 3);
       }
       if (number === "2") {
-        query = query.eq("priority", 2).eq("date_plain", date);
+        query = query.eq("priority", 2);
       }
       if (number === "1") {
         query = query.eq("priority", 1);
@@ -47,7 +47,7 @@ export const useTaskStore = defineStore("tasks", {
       return this.tasks;
     },
 
-    async filterDate(date, number) {
+    async filterDate(date) {
       let query = supabase.from("tasks").select("*");
       if (date === "all") {
         query = query.order("id", { ascending: false });
