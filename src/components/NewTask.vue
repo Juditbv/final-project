@@ -23,6 +23,7 @@
 			emit("newTask", taskTitle.value, taskDescription.value, taskPriority.value);
 			taskDescription.value = "";
 			taskTitle.value = "";
+			taskPriority.value = "1";
 		}
 	};
 </script>

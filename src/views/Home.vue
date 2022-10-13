@@ -95,14 +95,15 @@
 	};
 
 	const filterNumber = ref("");
-	const filterPriority = async () => {
-		await storeTasks.filterPriority(filterNumber.value);
-	};
-
 	const filterDateValue = ref("");
 
+	const filterPriority = async () => {
+		await storeTasks.filterPriority(filterNumber.value, filterDateValue.value);
+		filterDateValue.value = "all";
+	};
 	const filterDate = async () => {
-		await storeTasks.filterDate(filterDateValue.value);
+		await storeTasks.filterDate(filterDateValue.value, filterNumber.value);
+		filterNumber.value = "0";
 	};
 </script>
 
@@ -134,35 +135,39 @@
 			</div>
 		</div>
 		<section class="lg:col-span-2">
-			<div class="flex items-baseline">
+			<div class="flex items-baseline flex-wrap justify-between">
 				<h1 class="font-semibold text-6xl">Your tasks</h1>
-				<span class="ml-4">Filter by:</span>
-				<select
-					name="priority"
-					id="priority"
-					class="ml-5"
-					@change="filterPriority"
-					v-model="filterNumber"
-				>
-					<option value="0" selected>All</option>
-					<option value="1">Low</option>
-					<option value="2">Medium</option>
-					<option value="3">High</option>
-				</select>
-
-				<select
-					name="date"
-					id="date"
-					class="ml-5"
-					@change="filterDate"
-					v-model="filterDateValue"
-				>
-					<option value="all" selected>All</option>
-					<option v-for="date in storeTasks.dates" :key="date" :value="date">
-						{{ date }}
-					</option>
-				</select>
-				{{ filterDateValue }}
+				<div>
+					<span class="ml-4 font-semibold">Filter by</span>
+					<label class="text-sm ml-5">Priority</label>
+					<select
+						name="priority"
+						id="priority"
+						class="ml-2 mr-5 text-sm"
+						placeholder="Priority"
+						@change="filterPriority"
+						v-model="filterNumber"
+					>
+						<option value="0" selected>All</option>
+						<option value="1">Low</option>
+						<option value="2">Medium</option>
+						<option value="3">High</option>
+					</select>
+					<span class="mx-2">or</span>
+					<label class="text-sm ml-5">Date</label>
+					<select
+						name="date"
+						id="date"
+						class="ml-2 text-sm"
+						@change="filterDate"
+						v-model="filterDateValue"
+					>
+						<option value="all" selected>All</option>
+						<option v-for="date in storeTasks.dates" :key="date" :value="date">
+							{{ date }}
+						</option>
+					</select>
+				</div>
 			</div>
 			<section
 				class="grid gap-10 mt-10"
@@ -177,8 +182,11 @@
 					@updateContTask="updateTask"
 				/>
 			</section>
-			<h5 class="font-semibold text-2xl mt-10">All you've done so far!</h5>
+			<h5 v-if="tasksCompleted.length > 0" class="font-semibold text-2xl mt-10">
+				All you've done so far!
+			</h5>
 			<section
+				v-if="tasksCompleted.length > 0"
 				class="grid gap-10 mt-10"
 				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
 			>

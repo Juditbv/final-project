@@ -34,16 +34,6 @@
 		priority: props.task.priority,
 	});
 
-	const onlyDate = ref("");
-
-	const getDate = () => {
-		const timestamp = props.task.inserted_at;
-		const date = timestamp.substr(0, 10);
-		const dateReverse = date.split("-").reverse().join("-");
-		onlyDate.value = dateReverse;
-	};
-	getDate();
-
 	const textBadge = computed(() => {
 		if (props.task.priority === 3) {
 			return "High";
@@ -81,7 +71,7 @@
 							:class="bgBadge"
 							v-text="textBadge"
 						></p>
-						<p>Added on {{ onlyDate }}</p>
+						<p>Added on {{ task.date_plain }}</p>
 					</div>
 				</div>
 			</div>
