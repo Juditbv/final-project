@@ -34,10 +34,6 @@
 		priority: props.task.priority,
 	});
 
-	const taskTitle = ref(props.task.title);
-	const taskDescription = ref(props.task.description);
-	const taskPriority = ref(props.task.priority);
-
 	const onlyDate = ref("");
 
 	const getDate = () => {
@@ -49,7 +45,6 @@
 	getDate();
 
 	const textBadge = computed(() => {
-		//if (taskPriority.value === 3) {
 		if (props.task.priority === 3) {
 			return "High";
 		} else if (props.task.priority === 2) {
@@ -68,103 +63,91 @@
 			return "bg-green";
 		}
 	});
-
-	// const setBadge = (priorityNum) => {
-	// 	if (priorityNum === 3) {
-	// 		textBadge.value = "High";
-	// 		bgBadge.value = "bg-red";
-	// 	} else if (priorityNum === 2) {
-	// 		textBadge.value = "Medium";
-	// 		bgBadge.value = "bg-blue";
-	// 	} else {
-	// 		textBadge.value = "Low";
-	// 		bgBadge.value = "bg-green";
-	// 	}
-	// };
-	// setBadge(taskPriority.value);
 </script>
 
 <template>
 	<div class="card" :class="task.is_complete ? 'complete' : ''">
-		<div class="mr-4 flex flex-col justify-start">
-			<h3 v-show="!editingTask" class="font-semibold text-lg mb-2">
-				{{ formData.title }}
-			</h3>
-			<input
-				type="text"
-				id="taskTitle"
-				class="input-edit font-semibold text-lg"
-				v-show="editingTask"
-				v-model="formData.title"
-			/>
-			<div v-if="errorMsgTitle" class="notification">
-				<p>
-					<span
-						><svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="#EF6F6C"
-							class="w-6 h-6 inline"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-							/>
-						</svg>
-					</span>
-					{{ errorMsgTitle }}
-				</p>
-			</div>
-			<p v-show="!editingTask">{{ formData.description }}</p>
-			<input
-				type="text"
-				id="newTaskDescription"
-				class="input-edit"
-				v-show="editingTask"
-				v-model="formData.description"
-			/>
-			<div class="grow flex items-end mt-3" v-show="!editingTask">
-				<div class="text-xs flex items-center">
-					<p
-						v-if="formData.priority"
-						class="py-1 px-2 text-[white] max-w-max rounded-xl justify-end mr-2"
-						:class="bgBadge"
-						v-text="textBadge"
-					></p>
-					<p>Added on {{ onlyDate }}</p>
+		<div class="mr-4 flex">
+			<div v-show="!editingTask" class="flex flex-col justify-start">
+				<h3 class="font-semibold text-lg mb-2">
+					{{ formData.title }}
+				</h3>
+				<p>{{ formData.description }}</p>
+				<div class="grow flex items-end justify-end mt-3">
+					<div class="text-xs flex items-center">
+						<p
+							v-if="formData.priority"
+							class="py-1 px-2 text-[white] max-w-max rounded-xl mr-2"
+							:class="bgBadge"
+							v-text="textBadge"
+						></p>
+						<p>Added on {{ onlyDate }}</p>
+					</div>
 				</div>
 			</div>
-			<select
-				name="priority"
-				id="priority"
-				class="input-edit"
-				v-model="formData.priority"
-				v-show="editingTask"
-			>
-				<option value="1">Low</option>
-				<option value="2">Medium</option>
-				<option value="3">High</option>
-			</select>
-			<button
-				@click="updateContTask"
-				v-show="editingTask"
-				class="
-					bg-green
-					rounded-lg
-					font-semibold
-					text-base text-[white]
-					hover:bg-neutral
-					py-2
-					px-6
-					w-full
-					max-w-xl
-				"
-			>
-				Done
-			</button>
+			<div v-show="editingTask">
+				<input
+					type="text"
+					id="taskTitle"
+					class="input-edit font-semibold text-lg"
+					v-model="formData.title"
+				/>
+				<div v-if="errorMsgTitle" class="notification">
+					<p>
+						<span
+							><svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="#EF6F6C"
+								class="w-6 h-6 inline"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+								/>
+							</svg>
+						</span>
+						{{ errorMsgTitle }}
+					</p>
+				</div>
+
+				<input
+					type="text"
+					id="taskDescription"
+					class="input-edit"
+					v-model="formData.description"
+				/>
+
+				<select
+					name="priority"
+					id="priority"
+					class="input-edit"
+					v-model="formData.priority"
+				>
+					<option value="1">Low</option>
+					<option value="2">Medium</option>
+					<option value="3">High</option>
+				</select>
+				<button
+					@click="updateContTask"
+					class="
+						bg-green
+						rounded-lg
+						font-semibold
+						text-base text-[white]
+						hover:bg-neutral
+						py-2
+						px-6
+						w-full
+						max-w-xl
+					"
+				>
+					Done
+				</button>
+			</div>
 		</div>
 		<div class="flex flex-col gap-2">
 			<button
