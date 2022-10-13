@@ -24,9 +24,28 @@ export const useTaskStore = defineStore("tasks", {
       this.tasks = tasks;
       return this.tasks;
     },
+    //filters
+    async filterPriority(number) {
+      let query = supabase.from("tasks").select("*");
+      if (number === "3") {
+        query = query.eq("priority", 3);
+      }
+      if (number === "2") {
+        query = query.eq("priority", 2);
+      }
+      if (number === "1") {
+        query = query.eq("priority", 1);
+      }
+      if (number === "0") {
+        query = query.order("id", { ascending: false });
+      }
+
+      const { data: tasks } = await query;
+      this.tasks = tasks;
+      return this.tasks;
+    },
     // New code
     async addTask(title, description, priority) {
-      console.log(useUserStore().user.id);
       const { data, error } = await supabase.from("tasks").insert([
         {
           user_id: useUserStore().user.id,

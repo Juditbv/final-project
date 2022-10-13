@@ -8,6 +8,7 @@
 
 	import { ref, onMounted, computed } from "vue";
 	import { useTaskStore } from "../stores/task";
+	import { supabase } from "../supabase";
 
 	const storeTasks = useTaskStore();
 
@@ -91,6 +92,23 @@
 			sortDate();
 		}
 	};
+
+	const filterNumber = ref("");
+	const filterPriority = async () => {
+		await storeTasks.filterPriority(filterNumber.value);
+	};
+	// // const filterPriority = () => {
+	// // 	if (filterByPriority === "3") {
+	// // 		return storeTasks.tasks.filter((task) => task.priority === 3);
+	// // 	} else if (filterByPriority === "2") {
+	// // 		return storeTasks.tasks.filter((task) => task.priority === 2);
+	// // 	} else if (filterByPriority === "1") {
+	// // 		return storeTasks.tasks.filter((task) => task.priority === 1);
+	// // 	} else {
+	// // 		return initialFetch();
+	// // 	}
+	// // };
+	// //filters
 </script>
 
 <template>
@@ -121,7 +139,35 @@
 			</div>
 		</div>
 		<section class="lg:col-span-2">
-			<h1 class="font-semibold text-6xl">Your tasks</h1>
+			<div class="flex items-baseline">
+				<h1 class="font-semibold text-6xl">Your tasks</h1>
+				<span class="ml-4">Filter by:</span>
+				<select
+					name="priority"
+					id="priority"
+					class="ml-5"
+					@change="filterPriority"
+					v-model="filterNumber"
+				>
+					<option value="0">All</option>
+					<option value="1">Low</option>
+					<option value="2">Medium</option>
+					<option value="3">High</option>
+				</select>
+
+				<select
+					name="date"
+					id="date"
+					class="ml-5"
+					@change="filterByDate"
+					v-model="filterDate"
+				>
+					<option value="0" selected>All</option>
+					<option value="1">Low</option>
+					<option value="2">Medium</option>
+					<option value="3">High</option>
+				</select>
+			</div>
 			<section
 				class="grid gap-10 mt-10"
 				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
@@ -185,12 +231,10 @@
 	}
 
 	.notification {
-		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm absolute bottom-2 left-2;
+		@apply bg-red bg-opacity-70 border border-red mb-4 rounded-lg text-left p-2 text-sm absolute bottom-2 left-2 max-w-xl;
 	}
 
-	@media (max-width: 767px) {
-		.cols-1-mobile {
-			grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-		}
+	select {
+		@apply max-w-max w-full border-b bg-neutral bg-opacity-0 text-neutral text-opacity-70 focus:outline-none pt-3 pb-1;
 	}
 </style>

@@ -73,7 +73,7 @@
 					{{ formData.title }}
 				</h3>
 				<p>{{ formData.description }}</p>
-				<div class="grow flex items-end justify-end mt-3">
+				<div class="grow flex items-end mt-3">
 					<div class="text-xs flex items-center">
 						<p
 							v-if="formData.priority"
