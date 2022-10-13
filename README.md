@@ -121,3 +121,9 @@ Lil Supa
 - Refactor user preferences styling
 - Refactor function to updateTask
   ---- For next day: Want fo finally add two filters: to see just tasks with one priority, or from one date, and a check to show completed tasks or not.
+
+## Day 8
+
+- Add filters by date or priority to see just tasks from one day (from the days that have created tasks) or one concrete priority.
+- Final styling and refactor of some components.
+  --- Finish but not finish! :)
