@@ -43,8 +43,24 @@
 		"
 	>
 		<div class="content-center items-center justify-between hidden md:flex">
-			<h5 class="font-semibold">View tasks as</h5>
-			<div class="flex flex-nowrap text-sm">
+			<h5 class="font-semibold">View tasks in</h5>
+			<div class="flex flex-nowrap text-sm w-2/4">
+				<button
+					id="cols"
+					@click="toggleCols"
+					class="
+						px-3
+						py-2
+						rounded-l-xl
+						hover:text-[white] hover:bg-yellow
+						w-1/2
+					"
+					:class="
+						viewCols ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
+					"
+				>
+					Cols
+				</button>
 				<button
 					id="list"
 					@click="toggleList"
@@ -52,8 +68,9 @@
 						px-3
 						py-2
 						bg-[white]
-						rounded-l-xl
+						rounded-r-xl
 						hover:text-[white] hover:bg-yellow
+						w-1/2
 					"
 					:class="
 						!viewCols ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
@@ -61,23 +78,13 @@
 				>
 					List
 				</button>
-				<button
-					id="cols"
-					@click="toggleCols"
-					class="px-3 py-2 rounded-r-xl hover:text-[white] hover:bg-yellow"
-					:class="
-						viewCols ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
-					"
-				>
-					Columns
-				</button>
 			</div>
 		</div>
-		<div class="content-center items-center justify-between flex mt-3">
+		<div class="content-center items-center justify-between flex mt-0 md:mt-3">
 			<h5 class="font-semibold">Order tasks by</h5>
-			<div class="flex flex-nowrap text-sm">
+			<div class="flex flex-nowrap text-sm w-2/4">
 				<button
-					id="list"
+					id="date"
 					@click="orderDate"
 					class="
 						px-3
@@ -85,6 +92,7 @@
 						bg-[white]
 						rounded-l-xl
 						hover:text-[white] hover:bg-yellow
+						w-1/2
 					"
 					:class="
 						order === 'date'
@@ -95,9 +103,15 @@
 					Date
 				</button>
 				<button
-					id="cols"
+					id="priority"
 					@click="orderPriority"
-					class="px-3 py-2 rounded-r-xl hover:text-[white] hover:bg-yellow"
+					class="
+						px-3
+						py-2
+						rounded-r-xl
+						hover:text-[white] hover:bg-yellow
+						w-1/2
+					"
 					:class="
 						order === 'priority'
 							? 'bg-yellow text-[white]'
