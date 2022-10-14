@@ -144,7 +144,7 @@
 						<select
 							name="priority"
 							id="priority"
-							class="ml-2 mr-5 text-sm min-w-[80%] sm:min-w-max"
+							class="ml-2 mr-5 text-sm min-w-[75%] sm:min-w-max"
 							placeholder="Priority"
 							@change="filterPriority"
 							v-model="filterNumber"
@@ -161,7 +161,7 @@
 						<select
 							name="date"
 							id="date"
-							class="ml-2 text-sm min-w-[84%] sm:min-w-max"
+							class="ml-2 text-sm min-w-[80%] sm:min-w-max"
 							@change="filterDate"
 							v-model="filterDateValue"
 						>
