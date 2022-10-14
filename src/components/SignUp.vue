@@ -16,6 +16,9 @@
 	// Error Message
 	const errorMsg = ref(null);
 
+	// Message all good
+	const okMessage = ref(null);
+
 	// Router to push user once SignedUp to Log In
 	const redirect = useRouter();
 
@@ -24,7 +27,10 @@
 		if (password.value === confirmPassword.value) {
 			try {
 				await useUserStore().signUp(email.value, password.value);
-				// if (error) throw error;
+				okMessage.value = "Thanks! Check your inbox to confirm your email ;)";
+				setTimeout(() => {
+					okMessage.value = null;
+				}, 5000);
 				redirect.push({ path: "/auth/login" });
 			} catch (error) {
 				errorMsg.value = error.message;
@@ -107,6 +113,28 @@
 						</p>
 					</div>
 
+					<div v-if="okMessage" class="notification-ok">
+						<p>
+							<span
+								><svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="green"
+									class="w-6 h-6"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M4.5 12.75l6 6 9-13.5"
+									/>
+								</svg>
+							</span>
+							{{ okMessage }}
+						</p>
+					</div>
+
 					<p class="text-sm mb-10 md:mb-0">
 						<span> Already have an account? </span>
 						<PersonalRouter
@@ -159,5 +187,9 @@
 
 	.notification {
 		@apply bg-red bg-opacity-20 border border-red mb-4 rounded-lg text-left p-2 text-sm;
+	}
+
+	.notification-ok {
+		@apply bg-green bg-opacity-20 border border-green mb-4 rounded-lg text-left p-2 text-sm;
 	}
 </style>
