@@ -54,7 +54,7 @@
 		}
 	};
 
-	const viewCols = ref(true);
+	const viewCols = ref(false);
 
 	const changeView = (view) => {
 		viewCols.value = view;

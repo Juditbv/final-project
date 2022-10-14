@@ -46,29 +46,13 @@
 			<h5 class="font-semibold">View tasks in</h5>
 			<div class="flex flex-nowrap text-sm w-2/4">
 				<button
-					id="cols"
-					@click="toggleCols"
-					class="
-						px-3
-						py-2
-						rounded-l-xl
-						hover:text-[white] hover:bg-yellow
-						w-1/2
-					"
-					:class="
-						viewCols ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
-					"
-				>
-					Cols
-				</button>
-				<button
 					id="list"
 					@click="toggleList"
 					class="
 						px-3
 						py-2
 						bg-[white]
-						rounded-r-xl
+						rounded-l-xl
 						hover:text-[white] hover:bg-yellow
 						w-1/2
 					"
@@ -77,6 +61,22 @@
 					"
 				>
 					List
+				</button>
+				<button
+					id="cols"
+					@click="toggleCols"
+					class="
+						px-3
+						py-2
+						rounded-r-xl
+						hover:text-[white] hover:bg-yellow
+						w-1/2
+					"
+					:class="
+						viewCols ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
+					"
+				>
+					Cols
 				</button>
 			</div>
 		</div>
