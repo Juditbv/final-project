@@ -122,7 +122,7 @@
 		"
 	>
 		<div>
-			<div class="lg:sticky top-24">
+			<div class="lg:sticky top-8">
 				<UserPreferences
 					@toggle-list="changeView"
 					@toggle-cols="changeView"
