@@ -146,7 +146,7 @@
 				:class="
 					task.is_complete
 						? 'bg-green p-2'
-						: 'border border-green border-opacity-10 bg-green bg-opacity-40 hover:bg-green p-[7px]'
+						: 'border border-neutral border-opacity-5 bg-neutral bg-opacity-20 hover:bg-green p-[7px] hover:border-green'
 				"
 			>
 				<svg
