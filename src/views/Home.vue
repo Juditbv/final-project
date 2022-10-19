@@ -14,7 +14,6 @@
 
 	onMounted(() => {
 		initialFetch();
-		storeTasks.fetchOnlyDates();
 		window.addEventListener("resize", changeViewCols);
 	});
 
@@ -66,6 +65,13 @@
 		}
 	};
 
+	const showCompletedTasks = ref(true);
+
+	const showCompleted = (value) => {
+		showCompletedTasks.value = value;
+	};
+	console.log(showCompletedTasks.value);
+
 	const tasksCompleted = computed(() => {
 		return storeTasks.tasks.filter((task) => task.is_complete);
 	});
@@ -73,17 +79,40 @@
 	const tasksPending = computed(() => {
 		return storeTasks.tasks.filter((task) => !task.is_complete);
 	});
+	const allDates = computed(() => {
+		storeTasks.fetchOnlyDates();
+		return storeTasks.dates;
+	});
 
 	const errorMsg = ref("");
 
 	const order = ref("");
+
+	// const allTasks =
 	const sortPriority = async () => {
-		storeTasks.fetchTasksPriority();
 		order.value = "priority";
+		if (filterNumber.value !== "0" || filterDateValue.value !== "all") {
+			await storeTasks.filterTasks(
+				filterNumber.value,
+				filterDateValue.value,
+				order.value
+			);
+		} else {
+			await storeTasks.fetchTasksPriority();
+		}
 	};
+
 	const sortDate = async () => {
-		storeTasks.fetchTasks();
-		order.value = "date";
+		order.value = "inserted_at";
+		if (filterNumber.value !== "0" || filterDateValue.value !== "all") {
+			await storeTasks.filterTasks(
+				filterNumber.value,
+				filterDateValue.value,
+				order.value
+			);
+		} else {
+			await storeTasks.fetchTasks();
+		}
 	};
 
 	const initialFetch = () => {
@@ -94,16 +123,15 @@
 		}
 	};
 
-	const filterNumber = ref("");
-	const filterDateValue = ref("");
+	const filterNumber = ref("0");
+	const filterDateValue = ref("all");
 
-	const filterPriority = async () => {
-		await storeTasks.filterPriority(filterNumber.value);
-		filterDateValue.value = "all";
-	};
-	const filterDate = async () => {
-		await storeTasks.filterDate(filterDateValue.value);
-		filterNumber.value = "0";
+	const filterTasks = async () => {
+		await storeTasks.filterTasks(
+			filterNumber.value,
+			filterDateValue.value,
+			order.value
+		);
 	};
 </script>
 
@@ -128,8 +156,11 @@
 					@toggle-cols="changeView"
 					@order-priority="sortPriority"
 					@order-date="sortDate"
+					@show-completed="showCompleted"
+					@dont-show-completed="showCompleted"
 					:view-cols="viewCols"
 					:order="order"
+					:completed="showCompletedTasks"
 				/>
 				<NewTask @new-task="pushTaskSup" />
 			</div>
@@ -146,7 +177,7 @@
 							id="priority"
 							class="ml-2 mr-5 text-sm min-w-[75%] sm:min-w-max"
 							placeholder="Priority"
-							@change="filterPriority"
+							@change="filterTasks"
 							v-model="filterNumber"
 						>
 							<option value="0" selected>All</option>
@@ -162,15 +193,11 @@
 							name="date"
 							id="date"
 							class="ml-2 text-sm min-w-[80%] sm:min-w-max"
-							@change="filterDate"
+							@change="filterTasks"
 							v-model="filterDateValue"
 						>
 							<option value="all" selected>All</option>
-							<option
-								v-for="date in storeTasks.dates"
-								:key="date"
-								:value="date"
-							>
+							<option v-for="date in allDates" :key="date" :value="date">
 								{{ date }}
 							</option>
 						</select>
@@ -190,11 +217,20 @@
 					@updateContTask="updateTask"
 				/>
 			</section>
-			<h5 v-if="tasksCompleted.length > 0" class="font-semibold text-2xl mt-10">
-				All you've done so far!
+			<h5
+				v-if="tasksCompleted.length > 0 && showCompletedTasks"
+				class="font-semibold text-2xl mt-10"
+			>
+				Here are your completed tasks
+			</h5>
+			<h5
+				v-if="tasksCompleted.length <= 0 && tasksPending.length <= 0"
+				class="text-lg mt-10"
+			>
+				There are no tasks matching your filters. Try with others ;)
 			</h5>
 			<section
-				v-if="tasksCompleted.length > 0"
+				v-if="tasksCompleted.length > 0 && showCompletedTasks"
 				class="grid gap-10 mt-10"
 				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
 			>
