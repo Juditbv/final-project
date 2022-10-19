@@ -78,11 +78,12 @@
 
 	const order = ref("");
 	const sortPriority = async () => {
-		storeTasks.fetchTasksPriority();
+		await storeTasks.fetchTasksPriority();
 		order.value = "priority";
 	};
+
 	const sortDate = async () => {
-		storeTasks.fetchTasks();
+		await storeTasks.fetchTasks();
 		order.value = "date";
 	};
 
@@ -94,16 +95,11 @@
 		}
 	};
 
-	const filterNumber = ref("");
-	const filterDateValue = ref("");
+	const filterNumber = ref("0");
+	const filterDateValue = ref("all");
 
-	const filterPriority = async () => {
-		await storeTasks.filterPriority(filterNumber.value);
-		filterDateValue.value = "all";
-	};
-	const filterDate = async () => {
-		await storeTasks.filterDate(filterDateValue.value);
-		filterNumber.value = "0";
+	const filterTasks = async () => {
+		await storeTasks.filterTasks(filterNumber.value, filterDateValue.value);
 	};
 </script>
 
@@ -146,7 +142,7 @@
 							id="priority"
 							class="ml-2 mr-5 text-sm min-w-[75%] sm:min-w-max"
 							placeholder="Priority"
-							@change="filterPriority"
+							@change="filterTasks"
 							v-model="filterNumber"
 						>
 							<option value="0" selected>All</option>
@@ -162,7 +158,7 @@
 							name="date"
 							id="date"
 							class="ml-2 text-sm min-w-[80%] sm:min-w-max"
-							@change="filterDate"
+							@change="filterTasks"
 							v-model="filterDateValue"
 						>
 							<option value="all" selected>All</option>

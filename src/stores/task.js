@@ -27,32 +27,32 @@ export const useTaskStore = defineStore("tasks", {
       return this.tasks;
     },
     //filters
-    async filterPriority(number) {
+    async filterTasks(number, date) {
       let query = supabase.from("tasks").select("*");
-      if (number === "3") {
-        query = query.eq("priority", 3);
+
+      if ((number || date) && number === "3" && date !== "all") {
+        query = query.eq("priority", 3).eq("date_plain", date);
       }
-      if (number === "2") {
-        query = query.eq("priority", 2);
+      if ((number || date) && number === "3" && date === "all") {
+        query = query.eq("priority", 3).order("id", { ascending: false });
       }
-      if (number === "1") {
-        query = query.eq("priority", 1);
+      if ((number || date) && number === "2" && date !== "all") {
+        query = query.eq("priority", 2).eq("date_plain", date);
       }
-      if (number === "0") {
+      if ((number || date) && number === "2" && date === "all") {
+        query = query.eq("priority", 2).order("id", { ascending: false });
+      }
+      if ((number || date) && number === "1" && date !== "all") {
+        query = query.eq("priority", 1).eq("date_plain", date);
+      }
+      if ((number || date) && number === "1" && date === "all") {
+        query = query.eq("priority", 1).order("id", { ascending: false });
+      }
+      if ((number || date) && number === "0" && date === "all") {
         query = query.order("id", { ascending: false });
       }
-
-      const { data: tasks } = await query;
-      this.tasks = tasks;
-      return this.tasks;
-    },
-
-    async filterDate(date) {
-      let query = supabase.from("tasks").select("*");
-      if (date === "all") {
-        query = query.order("id", { ascending: false });
-      } else {
-        query = query.eq("date_plain", date);
+      if ((number || date) && number === "0" && date !== "all") {
+        query = query.eq("date_plain", date).order("id", { ascending: false });
       }
 
       const { data: tasks } = await query;
