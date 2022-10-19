@@ -27,32 +27,43 @@ export const useTaskStore = defineStore("tasks", {
       return this.tasks;
     },
     //filters
-    async filterTasks(number, date) {
+    async filterTasks(number, date, ordertasks) {
       let query = supabase.from("tasks").select("*");
 
-      if ((number || date) && number === "3" && date !== "all") {
-        query = query.eq("priority", 3).eq("date_plain", date);
+      if ((number || date) && number === "3" && date !== "all" && ordertasks) {
+        query = query
+          .eq("priority", 3)
+          .eq("date_plain", date)
+          .order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "3" && date === "all") {
-        query = query.eq("priority", 3).order("id", { ascending: false });
+      if ((number || date) && number === "3" && date === "all" && ordertasks) {
+        query = query.eq("priority", 3).order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "2" && date !== "all") {
-        query = query.eq("priority", 2).eq("date_plain", date);
+      if ((number || date) && number === "2" && date !== "all" && ordertasks) {
+        query = query
+          .eq("priority", 2)
+          .eq("date_plain", date)
+          .order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "2" && date === "all") {
-        query = query.eq("priority", 2).order("id", { ascending: false });
+      if ((number || date) && number === "2" && date === "all" && ordertasks) {
+        query = query.eq("priority", 2).order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "1" && date !== "all") {
-        query = query.eq("priority", 1).eq("date_plain", date);
+      if ((number || date) && number === "1" && date !== "all" && ordertasks) {
+        query = query
+          .eq("priority", 1)
+          .eq("date_plain", date)
+          .order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "1" && date === "all") {
-        query = query.eq("priority", 1).order("id", { ascending: false });
+      if ((number || date) && number === "1" && date === "all" && ordertasks) {
+        query = query.eq("priority", 1).order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "0" && date === "all") {
-        query = query.order("id", { ascending: false });
+      if ((number || date) && number === "0" && date === "all" && ordertasks) {
+        query = query.order(ordertasks, { ascending: false });
       }
-      if ((number || date) && number === "0" && date !== "all") {
-        query = query.eq("date_plain", date).order("id", { ascending: false });
+      if ((number || date) && number === "0" && date !== "all" && ordertasks) {
+        query = query
+          .eq("date_plain", date)
+          .order(ordertasks, { ascending: false });
       }
 
       const { data: tasks } = await query;

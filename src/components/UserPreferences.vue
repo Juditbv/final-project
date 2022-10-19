@@ -95,7 +95,7 @@
 						w-1/2
 					"
 					:class="
-						order === 'date'
+						order === 'inserted_at'
 							? 'bg-yellow text-[white]'
 							: 'bg-[white] text-neutral'
 					"

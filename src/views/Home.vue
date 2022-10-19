@@ -11,10 +11,9 @@
 	import { supabase } from "../supabase";
 
 	const storeTasks = useTaskStore();
-
+	storeTasks.fetchOnlyDates();
 	onMounted(() => {
 		initialFetch();
-		storeTasks.fetchOnlyDates();
 		window.addEventListener("resize", changeViewCols);
 	});
 
@@ -77,14 +76,32 @@
 	const errorMsg = ref("");
 
 	const order = ref("");
+
+	// const allTasks =
 	const sortPriority = async () => {
-		await storeTasks.fetchTasksPriority();
 		order.value = "priority";
+		if (filterNumber.value !== "0" || filterDateValue.value !== "all") {
+			await storeTasks.filterTasks(
+				filterNumber.value,
+				filterDateValue.value,
+				order.value
+			);
+		} else {
+			await storeTasks.fetchTasksPriority();
+		}
 	};
 
 	const sortDate = async () => {
-		await storeTasks.fetchTasks();
-		order.value = "date";
+		order.value = "inserted_at";
+		if (filterNumber.value !== "0" || filterDateValue.value !== "all") {
+			await storeTasks.filterTasks(
+				filterNumber.value,
+				filterDateValue.value,
+				order.value
+			);
+		} else {
+			await storeTasks.fetchTasks();
+		}
 	};
 
 	const initialFetch = () => {
@@ -99,7 +116,11 @@
 	const filterDateValue = ref("all");
 
 	const filterTasks = async () => {
-		await storeTasks.filterTasks(filterNumber.value, filterDateValue.value);
+		await storeTasks.filterTasks(
+			filterNumber.value,
+			filterDateValue.value,
+			order.value
+		);
 	};
 </script>
 
@@ -188,6 +209,12 @@
 			</section>
 			<h5 v-if="tasksCompleted.length > 0" class="font-semibold text-2xl mt-10">
 				All you've done so far!
+			</h5>
+			<h5
+				v-if="tasksCompleted.length <= 0 && tasksPending.length <= 0"
+				class="text-lg mt-10"
+			>
+				There are no tasks matching your filters. Try with others ;)
 			</h5>
 			<section
 				v-if="tasksCompleted.length > 0"
