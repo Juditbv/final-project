@@ -6,10 +6,13 @@
 		"toggleList",
 		"orderPriority",
 		"orderDate",
+		"showCompleted",
+		"dontShowCompleted",
 	]);
 	const props = defineProps({
 		viewCols: Boolean,
 		order: String,
+		completed: Boolean,
 	});
 
 	const toggleCols = () => {
@@ -26,6 +29,13 @@
 
 	const orderDate = () => {
 		emit("orderDate");
+	};
+
+	const showCompleted = () => {
+		emit("showCompleted", true);
+	};
+	const dontShowCompleted = () => {
+		emit("dontShowCompleted", false);
 	};
 </script>
 
@@ -119,6 +129,44 @@
 					"
 				>
 					Priority
+				</button>
+			</div>
+		</div>
+		<div class="content-center items-center justify-between flex mt-0 md:mt-3">
+			<h5 class="font-semibold">Show completed?</h5>
+			<div class="flex flex-nowrap text-sm w-2/4">
+				<button
+					id="yes"
+					@click="showCompleted"
+					class="
+						px-3
+						py-2
+						bg-[white]
+						rounded-l-xl
+						hover:text-[white] hover:bg-yellow
+						w-1/2
+					"
+					:class="
+						completed ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
+					"
+				>
+					Yes
+				</button>
+				<button
+					id="no"
+					@click="dontShowCompleted"
+					class="
+						px-3
+						py-2
+						rounded-r-xl
+						hover:text-[white] hover:bg-yellow
+						w-1/2
+					"
+					:class="
+						!completed ? 'bg-yellow text-[white]' : 'bg-[white] text-neutral'
+					"
+				>
+					No
 				</button>
 			</div>
 		</div>

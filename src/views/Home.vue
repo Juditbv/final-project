@@ -11,7 +11,7 @@
 	import { supabase } from "../supabase";
 
 	const storeTasks = useTaskStore();
-	storeTasks.fetchOnlyDates();
+
 	onMounted(() => {
 		initialFetch();
 		window.addEventListener("resize", changeViewCols);
@@ -65,12 +65,23 @@
 		}
 	};
 
+	const showCompletedTasks = ref(true);
+
+	const showCompleted = (value) => {
+		showCompletedTasks.value = value;
+	};
+	console.log(showCompletedTasks.value);
+
 	const tasksCompleted = computed(() => {
 		return storeTasks.tasks.filter((task) => task.is_complete);
 	});
 
 	const tasksPending = computed(() => {
 		return storeTasks.tasks.filter((task) => !task.is_complete);
+	});
+	const allDates = computed(() => {
+		storeTasks.fetchOnlyDates();
+		return storeTasks.dates;
 	});
 
 	const errorMsg = ref("");
@@ -145,8 +156,11 @@
 					@toggle-cols="changeView"
 					@order-priority="sortPriority"
 					@order-date="sortDate"
+					@show-completed="showCompleted"
+					@dont-show-completed="showCompleted"
 					:view-cols="viewCols"
 					:order="order"
+					:completed="showCompletedTasks"
 				/>
 				<NewTask @new-task="pushTaskSup" />
 			</div>
@@ -183,11 +197,7 @@
 							v-model="filterDateValue"
 						>
 							<option value="all" selected>All</option>
-							<option
-								v-for="date in storeTasks.dates"
-								:key="date"
-								:value="date"
-							>
+							<option v-for="date in allDates" :key="date" :value="date">
 								{{ date }}
 							</option>
 						</select>
@@ -207,8 +217,11 @@
 					@updateContTask="updateTask"
 				/>
 			</section>
-			<h5 v-if="tasksCompleted.length > 0" class="font-semibold text-2xl mt-10">
-				All you've done so far!
+			<h5
+				v-if="tasksCompleted.length > 0 && showCompletedTasks"
+				class="font-semibold text-2xl mt-10"
+			>
+				Here are your completed tasks
 			</h5>
 			<h5
 				v-if="tasksCompleted.length <= 0 && tasksPending.length <= 0"
@@ -217,7 +230,7 @@
 				There are no tasks matching your filters. Try with others ;)
 			</h5>
 			<section
-				v-if="tasksCompleted.length > 0"
+				v-if="tasksCompleted.length > 0 && showCompletedTasks"
 				class="grid gap-10 mt-10"
 				:class="viewCols ? 'grid-cols-2' : 'grid-cols-1'"
 			>
