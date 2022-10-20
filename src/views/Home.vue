@@ -166,7 +166,7 @@
 			</div>
 		</div>
 		<section class="lg:col-span-2">
-			<div class="flex items-baseline flex-wrap justify-between">
+			<div class="flex items-end flex-wrap justify-between">
 				<h1 class="font-semibold text-6xl">Your tasks</h1>
 				<div class="flex flex-wrap mt-3">
 					<span class="ml-0 sm:ml-4 font-semibold">Filter by</span>
@@ -186,7 +186,7 @@
 							<option value="3">High</option>
 						</select>
 					</div>
-					<span class="mx-2 mt-2 sm:mt-0">or</span>
+					<span class="mx-2 mt-2 sm:mt-0 text-sm">and</span>
 					<div class="w-full sm:max-w-max mt-2 sm:mt-0">
 						<label class="text-sm ml-0 sm:ml-5">Date</label>
 						<select
