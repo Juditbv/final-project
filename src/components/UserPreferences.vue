@@ -132,7 +132,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="content-center items-center justify-between flex mt-0 md:mt-3">
+		<div class="content-center items-center justify-between flex mt-1 md:mt-3">
 			<h5 class="font-semibold">Show completed?</h5>
 			<div class="flex flex-nowrap text-sm w-2/4">
 				<button
