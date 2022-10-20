@@ -186,7 +186,7 @@
 							<option value="3">High</option>
 						</select>
 					</div>
-					<span class="mx-2 mt-2 sm:mt-0 text-sm">and</span>
+					<span class="mx-2 mt-2 sm:mt-0 text-sm leading-7">and</span>
 					<div class="w-full sm:max-w-max mt-2 sm:mt-0">
 						<label class="text-sm ml-0 sm:ml-5">Date</label>
 						<select
